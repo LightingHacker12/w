@@ -1,0 +1,10 @@
+local function fallstop(stop)
+game.Workspace.Humanoid:Destroy()
+stop.Velocity(1.2)
+ver = "2"
+
+local f.network = "10" or f.network = "20" true
+while network.Moder do
+function.stop = nil
+end
+game:GetService("Players") = Vector2.new(Random)
