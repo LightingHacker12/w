@@ -161,7 +161,7 @@ if rerun == true then
 while true do
 if Enum.HumanoidStateType.Dead then
 wait(0.0)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/LightingHacker12/reanimate2313/main/Nameless", true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/LightingHacker12/w/main/Worthless%20Animate", true))()
 end
 end
 end
