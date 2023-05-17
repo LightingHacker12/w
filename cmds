@@ -1,0 +1,4 @@
+game.Players.LocalPlayer.Chatted:Connect(function(msg)
+    if msg == ".R6" then
+loadstring(game:HttpGet("https://raw.githubusercontent.com/LightingHacker12/reanimate2313/main/again%20reanimate", true))()
+end
