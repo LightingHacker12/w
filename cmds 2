@@ -10,3 +10,11 @@ game.Players.LocalPlayer.Chatted:Connect(function(msg)
     if msg == ".Krystal" then
 loadstring(game:HttpGet("https://raw.githubusercontent.com/LightingHacker12/w/main/krystal%20dance%20v2",true))()
 end
+game.Players.LocalPlayer.Chatted:Connect(function(msg)
+    if msg == ".Worthless" then
+loadstring(game:HttpGet("https://raw.githubusercontent.com/LightingHacker12/w/main/Worthless%20Animate", true))()
+end
+game.Players.LocalPlayer.Chatted:Connect(function(msg)
+    if msg == ".BotReanim" then
+loadstring(game:HttpGet("https://raw.githubusercontent.com/LightingHacker12/w/main/Bot%20Reanimate",true))()
+end
