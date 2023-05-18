@@ -7,7 +7,6 @@
 	(UPDATED)
 ]]
 
-local rerun = true --dont change the best
 local healthHide = true --moves your head away every 3 seconds so other players dont see your health bar
 local hideHealthHide = true --if this is enabled with health hide you wont see your head disappearing, others will
 local reclaim = true --if you lost control over a part this will move your primary part to the part so you get it back
