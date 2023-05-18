@@ -4,6 +4,7 @@
 	remember me = cap
 	working = true (now execute :coems:)
 	FDless Reanimate fixed by What A Nice Shit Reanimator
+	(UPDATED)
 ]]
 
 local rerun = true --dont change the best
@@ -157,14 +158,14 @@ if discharscripts then
     end
 end
 
-if rerun == true then
+--[[if rerun == true then
 while true do
 if Enum.HumanoidStateType.Dead then
 wait(8)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/LightingHacker12/w/main/Worthless%20Animate", true))()
 end
 end
-end
+end]]
 
 if humState16 and hum and (hum.Health > 0) then
     hum:ChangeState(16)
@@ -1053,7 +1054,7 @@ addmode("v", {
 addmode("c", {
     idle = function()
        RightHip.C0 = RightHip.C0:Lerp(cf(1, -1.25 + 0.25 * sin(sine * -2), 0.25) * angles(0, 1.2217304763960306, -0.3490658503988659 + 0.3490658503988659 * sin((sine + 30) * -2)), deltaTime) 
-       AccessoryWeld.C0 = AccessoryWeld.C0:Lerp(cf(3.9353835745714605e-09, -0.1399998664855957, -0.4502722918987274) * angles(0, 0, 0), deltaTime) 
+       --AccessoryWeld.C0 = AccessoryWeld.C0:Lerp(cf(3.9353835745714605e-09, -0.1399998664855957, -0.4502722918987274) * angles(0, 0, 0), deltaTime) 
        Neck.C0 = Neck.C0:Lerp(cf(0, 1, 0) * angles(-1.3962634015954636 + 0.17453292519943295 * sin(sine * 2), 0, 3.141592653589793), deltaTime) 
        RightShoulder.C0 = RightShoulder.C0:Lerp(cf(1.25, 0.9 + 0.2 * sin((sine + 30) * -2), 0) * angles(0.17453292519943295 * sin(sine * 2), 3.141592653589793, 2.443460952792061), deltaTime) 
        --AccessoryWeld.C0 = AccessoryWeld.C0:Lerp(cf(8.657480066176504e-09, 0.17499971389770508, 0.04972775653004646) * angles(0, 0, 0), deltaTime) 
