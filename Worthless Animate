@@ -1,5 +1,5 @@
 --[[
-    Whorthless Animate
+    Worthless Animate
 	and idc what ur gonna do the shit script
 	remember me = cap
 	working = true (now execute :coems:)
@@ -160,7 +160,7 @@ end
 if rerun == true then
 while true do
 if Enum.HumanoidStateType.Dead then
-wait(0.0)
+wait(8)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/LightingHacker12/w/main/Worthless%20Animate", true))()
 end
 end
