@@ -529,9 +529,7 @@ setfflag("CrashUploadToBacktraceBlackholeToken", "")
 
 setfflag("CrashUploadToBacktraceWindowsPlayerToken", "")
 
---getgenv().ReanimateVersion = "v2"
-
---loadstring(game:HttpGet("https://raw.githubusercontent.com/stangithuboffical/selexity/main/Reanimate", true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/SacredLua/ProjectX/main/reanimate.lua",true))()
 
 
 wait (2.10)
