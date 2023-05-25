@@ -529,7 +529,7 @@ setfflag("CrashUploadToBacktraceBlackholeToken", "")
 
 setfflag("CrashUploadToBacktraceWindowsPlayerToken", "")
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/SacredLua/ProjectX/main/reanimate.lua",true))()
+--loadstring(game:HttpGet("https://raw.githubusercontent.com/SacredLua/ProjectX/main/reanimate.lua",true))()
 
 
 wait (2.10)
