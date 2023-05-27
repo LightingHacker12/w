@@ -1,4 +1,5 @@
-
+--noob
+--updated
 
 
 
@@ -530,6 +531,10 @@ setfflag("CrashUploadToBacktraceBlackholeToken", "")
 setfflag("CrashUploadToBacktraceWindowsPlayerToken", "")
 
 wait (2.10)
+
+getgenv().ReanimateVersion = "v5"
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/stangithuboffical/selexity/main/Reanimate", true))()
 
 
 local hrp = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
