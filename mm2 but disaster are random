@@ -1,8 +1,10 @@
 game:GetService("StarterGui"):SetCore("SendNotification",{
 	Title = "Script made by ElementsDied#7764",
-	Text = "Enjoy! (if ur MyWorld fixed)",
+	Text = "Enjoy! (if ur MyWorld i fixed)",
+	Duration = 3;
 })
 
+wait(5)
 local Athmos = Instance.new("Atmosphere")
 local char = lp.Character
 local root = char.HumanoidRootPart
@@ -12,6 +14,7 @@ function freeze()
 game:GetService("StarterGui"):SetCore("SendNotification",{
 	Title = "Freeze",
 	Text = "Freeze for 5 second",
+	Duration = 5;
 })
 root.Anchored = true
 wait(5)
@@ -22,6 +25,7 @@ function lowspeed()
 game:GetService("StarterGui"):SetCore("SendNotification",{
 	Title = "Low Speed",
 	Text = "Low Speed for 5 second",
+	Duration = 5;
 })
 lp.Humanoid.WalkSpeed = 5
 wait(5)
@@ -32,6 +36,7 @@ function upgradespeed()
 game:GetService("StarterGui"):SetCore("SendNotification",{
 	Title = "Upgrade Speed",
 	Text = "Speed now 50 for 10 second",
+	Duration = 10;
 })
 lp.Humanoid.WalkSpeed = 50
 wait(10)
@@ -42,6 +47,7 @@ function upgradepower()
 game:GetService("StarterGui"):SetCore("SendNotification",{
 	Title = "Jump Power",
 	Text = "JumpPower changed 50 for 10 second",
+	Duration = 10;
 })
 lp.Humanoid.JumpPower = 50
 wait(10)
@@ -52,6 +58,7 @@ function blind()
 game:GetService("StarterGui"):SetCore("SendNotification",{
 	Title = "Blind",
 	Text = "Blinded for 10 second", 
+	Duration = 10;
 })
 Athmos.Haze = 100
 Athmos.Density = 100
@@ -64,6 +71,7 @@ function jumppower()
 game:GetService("StarterGui"):SetCore("SendNotification",{
 	Title = "Jumpless",
 	Text = "Ur Cant jump for 5 second",
+	Duration = 5;
 })
 lp.JumpPower = 1
 wait(5)
