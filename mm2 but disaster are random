@@ -1,20 +1,3 @@
-Msgreq("Credits","Script made by ElementsDied#7764",5,"","")
-
-wait(8)
-local Msgreq = function(Title,Text,Duration,Button1Text,Button2Text)
-	local NotificationBindable = Instance.new("BindableFunction")
-	game.StarterGui:SetCore("SendNotification", {
-		Title = Title;
-		Text = Text;
-		Icon = "";
-		Duration = Duration;
-		Button1 = Button1Text;
-		Button2 = Button2Text;
-		Callback = NotificationBindable;
-	})
-	return NotificationBindable
-end
-
 local Athmos = Instance.new("Atmosphere")
 local char = lp.Character
 local root = char.HumanoidRootPart
