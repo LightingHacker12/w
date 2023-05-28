@@ -27,9 +27,9 @@ game:GetService("StarterGui"):SetCore("SendNotification",{
 	Text = "Low Speed for 5 second",
 	Duration = 5;
 })
-lp.Humanoid.WalkSpeed = 5
+char.Humanoid.WalkSpeed = 5
 wait(5)
-lp.Humanoid.WalkSpeed = 25
+char.Humanoid.WalkSpeed = 25
 end
 
 function upgradespeed()
@@ -38,9 +38,9 @@ game:GetService("StarterGui"):SetCore("SendNotification",{
 	Text = "Speed now 50 for 10 second",
 	Duration = 10;
 })
-lp.Humanoid.WalkSpeed = 50
+char.Humanoid.WalkSpeed = 50
 wait(10)
-lp.Humanoid.WalkSpeed = 25
+char.Humanoid.WalkSpeed = 25
 end
 
 function upgradepower()
@@ -49,9 +49,9 @@ game:GetService("StarterGui"):SetCore("SendNotification",{
 	Text = "JumpPower changed 50 for 10 second",
 	Duration = 10;
 })
-lp.Humanoid.JumpPower = 50
+char.Humanoid.JumpPower = 50
 wait(10)
-lp.Humanoid.JumpPower = 25
+char.Humanoid.JumpPower = 25
 end
 
 function blind()
@@ -73,9 +73,9 @@ game:GetService("StarterGui"):SetCore("SendNotification",{
 	Text = "Ur Cant jump for 5 second",
 	Duration = 5;
 })
-lp.JumpPower = 1
+char.JumpPower = 1
 wait(5)
-lp.JumpPower = 20
+char.JumpPower = 20
 end
 
 while true do
