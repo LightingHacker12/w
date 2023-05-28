@@ -1,0 +1,86 @@
+Msgreq("Credits","Script made by ElementsDied#7764",5,"","")
+
+wait(8)
+local Msgreq = function(Title,Text,Duration,Button1Text,Button2Text)
+	local NotificationBindable = Instance.new("BindableFunction")
+	game.StarterGui:SetCore("SendNotification", {
+		Title = Title;
+		Text = Text;
+		Icon = "";
+		Duration = Duration;
+		Button1 = Button1Text;
+		Button2 = Button2Text;
+		Callback = NotificationBindable;
+	})
+	return NotificationBindable
+end
+
+local Athmos = Instance.new("Atmosphere")
+local char = lp.Character
+local root = char.HumanoidRootPart
+local lp = game.Players.LocalPlayer
+
+function freeze()
+root.Anchored = true
+Msgreq("Anchored","Anchored for 5 second",5,"","")
+wait(5)
+root.Anchored = false
+end
+
+function lowspeed()
+lp.Humanoid.WalkSpeed = 5
+Msgreq("Walkspeed","Walkspeed changed 5 for 5 second",5,"","")
+wait(5)
+lp.Humanoid.WalkSpeed = 25
+end
+
+function upgradespeed()
+lp.Humanoid.WalkSpeed = 50
+Msgreq("Upgrade Speed","Speed Upgraded for 10 second",10,"","")
+wait(10)
+lp.Humanoid.WalkSpeed = 25
+end
+
+function upgradepower()
+lp.Humanoid.JumpPower = 50
+Msgreq("Upgrade Jump","Jump Upgraded for 10 second",10,"","")
+wait(10)
+lp.Humanoid.JumpPower = 25
+end
+
+function blind()
+Msgreq("Blind","Blinded for 10 second",10,"","")
+Athmos.Haze = 100
+Athmos.Density = 100
+Athmos.Decay = (106, 112, 125)
+wait(10)
+Athmos:Destroy()
+end
+
+function jumppower()
+Msgreq("Jump Power","Jump Power 1 for 5 second",5,"","")
+lp.JumpPower = 1
+wait(5)
+lp.JumpPower = 20
+end
+
+while true do
+	wait(6)
+	if math.random(1,2) == 1 then lowspeed() else freeze()
+
+	end
+end
+
+while true do
+	wait(8)
+	if math.random(3,4) == 3 then blind() else jumppower()
+
+	end
+end
+
+while true do
+	wait(10)
+	if math.random(5,6) == 5 then upgradespeed() else upgradepower()
+
+	end
+end
