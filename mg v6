@@ -1,19 +1,3 @@
---[[
-
-Maxilito Glitcher V6
-
---Chat Controls:
-/e mute - Mute's sounds
-/e unmute - Unmute's sounds
-
-this script last star edit
-made by ElementsDied#7764
-
-]]--
-
-------------------------------------------------------
-
-
 CFA = function(X,Y,Z)
 	return(CFrame.Angles(math.rad(X),math.rad(Y),math.rad(Z)))
 end
@@ -24,18 +8,6 @@ function rand(x,z)
 end
 function CFR(nX,mX,nY,mY,nZ,mZ)
 	return (CFrame.Angles(math.rad(rand(nX,nX)),math.rad(rand(nY,mY)),math.rad(rand(nZ,mZ))))
-end
-function rand3(n,c,v)
-	return(math.random(n,c,v))
-end
-
-local waitsecond = 3
-local function coroutine.wait(waitsecond)
-	for i,v in pairs(coroutine) do
-		v.wrap():wait(waitsecond)
-		v.resume():wait(waitsecond)
-		v.create():wait(waitsecond)
-	end
 end
 
 local R6,R15 = Enum.HumanoidRigType.R6,Enum.HumanoidRigType.R15
@@ -56,7 +28,6 @@ plr.Humanoid.Health = 1000000
 local sine = 0
 local kevingaming = 0
 
-local MainGUI = Instance.new("ScreenGui")
 local rs = game:GetService("RunService")
 local heartbeat = rs.Heartbeat
 
@@ -101,7 +72,6 @@ script.Events.MouseCFrame.OnServerEvent:Connect(function(player,mcf,mt,torsocf,l
 	end
 end)
 
-local mode = "shr"
 local Insane = false
 for i,v in pairs(plr:GetChildren()) do
 	if v:IsA("CharacterMesh") or v:IsA("Accessory") then
@@ -121,6 +91,26 @@ for i,v in pairs(plr:GetChildren()) do
 					c:Destroy()
 				end
 			end
+		end
+	end
+end
+
+game.FilteringChat.Enabled = false
+local localplayer = game.Players.LocalPlayer
+localplayer:Connect(function(msg)
+    if msg == "/mute" then
+	notify("Music: muted",true)
+    for i,v in pairs(game) do
+		if v:IsA("Sound") then
+			v:Destroy()
+		end
+	end
+end
+elseif msg == "/unmute" then
+	notify("Music: unmuted",true)
+	for _,v in pairs(game) do
+		if v:IsA("Sound") then
+			v:Play()
 		end
 	end
 end
@@ -165,7 +155,7 @@ for i,v in pairs(workspace:GetChildren()) do
 	end
 end
 
-if mode == "shr" then
+
 
 if not game.StarterPlayer.StarterCharacterScripts:WaitForChild("CFrame"..plr.Name,.5) then
 	local a = script.LocalCFrame:Clone()
@@ -181,8 +171,8 @@ if not game.StarterPlayer.StarterCharacterScripts:WaitForChild("LastStarEffects"
 end
 
 plr.Humanoid.Died:Connect(function()
-    --local hum.Parent = ""..humparent0
-    --local Hum.Parent = ""..humparent1
+    local hum.Parent = ""..humparent0
+    local Hum.Parent = ""..humparent1
 	for i,v in pairs(workspace:GetDescendants()) do
 		if v:IsA("LocalScript") and v.Name == "CFrame"..plr.Name then
 			v:Destroy()
@@ -495,7 +485,62 @@ Theme:Play()
 Hum.WalkSpeed = 16
 Hum.JumpPower = 50
 
---this shit reanimate by mywold edited by ElementsDied#7764
+local c = game.Players.LocalPlayer.Character
+for i, v in pairs({"Right Arm", "Left Arm"}) do
+    local arm = c[v]
+    arm.Parent = nil
+    arm.Transparency = 1
+    arm.Parent = c
+end
+
+local c = game.Players.LocalPlayer.Character
+for i, v in pairs({"Right Leg", "Left Leg"}) do
+    local Leg = c[v]
+    Leg.Parent = nil
+    Leg.Transparency = 1
+    Leg.Parent = c
+end
+
+local v3_net, v3_808 = Vector3.new(0, 25.1, 0), Vector3.new(8, 0, 8)
+		local function getNetlessVelocity(realPartVelocity)
+			local mag = realPartVelocity.Magnitude
+			if mag > 1 then
+				local unit = realPartVelocity.Unit
+				if (unit.Y > 0.25) or (unit.Y < -0.75) then
+					return unit * (25.1 / unit.Y)
+				end
+			end 
+			return v3_net + realPartVelocity * v3_808
+		end
+local simradius = "shp"
+local antiragdoll = true
+local newanimate = true
+local discharscripts = true
+local R15toR6 = true
+local hatcollide = true
+local humState16 = true
+local addtools = false
+local hedafterneck = false
+local loadtime = game:GetService("Players").RespawnTime + 0.5
+local method = 0
+local alignmode = 3
+
+healthHide = healthHide and ((method == 0) or (method == 2) or (method == 000)) and gp(c, "Head", "BasePart")
+
+local lp = game:GetService("Players").LocalPlayer
+local rs = game:GetService("RunService")
+local stepped = rs.Stepped
+local heartbeat = rs.Heartbeat
+local renderstepped = rs.RenderStepped
+local sg = game:GetService("StarterGui")
+local ws = game:GetService("Workspace")
+local cf = CFrame.new
+local v3 = Vector3.new
+local v3_0 = v3(0, 0, 0)
+local inf = math.huge
+
+local c = lp.Character
+
 if not (c and c.Parent) then
 	return
 end
@@ -504,7 +549,6 @@ c.Destroying:Connect(function()
 	c = nil
 end)
 
-local loadtime = game:GetService("Players").RespawnTime + 0.5
 local function gp(parent, name, className)
 	if typeof(parent) == "Instance" then
 		for i, v in pairs(parent:GetChildren()) do
@@ -516,7 +560,6 @@ local function gp(parent, name, className)
 	return nil
 end
 
-local R15toR6 = true
 local function align(Part0, Part1)
 	Part0.CustomPhysicalProperties = PhysicalProperties.new(0.0001, 0.0001, 0.0001, 0.0001, 0.0001)
 
@@ -529,7 +572,7 @@ local function align(Part0, Part1)
 	att1.Position = v3_0
 	att1.Name = "att1_" .. Part1.Name
 
-	if (align == 1) or (align == 2) then
+	if (alignmode == 1) or (alignmode == 2) then
 		local ape = Instance.new("AlignPosition", att0)
 		ape.ApplyAtCenterOfMass = false
 		ape.MaxForce = inf
@@ -542,8 +585,7 @@ local function align(Part0, Part1)
 		ape.RigidityEnabled = true
 	end
 
-	if (align == 2) or (align == 3) then
-		local discharscripts = true
+	if (alignmode == 2) or (alignmode == 3) then
 		local apd = Instance.new("AlignPosition", att0)
 		apd.ApplyAtCenterOfMass = false
 		apd.MaxForce = inf
@@ -557,11 +599,6 @@ local function align(Part0, Part1)
 	end
 
 	local ao = Instance.new("AlignOrientation", att0)
-	local rs = game:GetService("RunService")
-    local stepped = rs.Stepped
-    local heartbeat = rs.Heartbeat
-    local renderstepped = rs.RenderStepped
-	local hatcollide = true
 	ao.MaxAngularVelocity = inf
 	ao.MaxTorque = inf
 	ao.PrimaryAxisOnly = false
@@ -571,26 +608,11 @@ local function align(Part0, Part1)
 	ao.Attachment0 = att0
 	ao.RigidityEnabled = false
 
-    local lp = game:GetService("Players").LocalPlayer
-	local v3_net, v3_808 = Vector3.new(0, 25.1, 0), Vector3.new(8, 0, 8)
-		local function getNetlessVelocity(realPartVelocity)
-			local mag = realPartVelocity.Magnitude
-		    healthHide = healthHide and ((method == 0) or (method == 2) or (method == 000)) and gp(c, "Head", "BasePart")
-			local simradius = "shp"
-			if mag > 1 then
-				(if method == 10 then return end)
-				local unit = realPartVelocity.Unit
-				if (unit.Y > 0.25) or (unit.Y < -0.75) then
-					return unit * (25.1 / unit.Y)
-				end
-			end 
-	return v3_net + realPartVelocity * v3_808
 	if type(getNetlessVelocity) == "function" then
 	    local realVelocity = v3_0
         local steppedcon = stepped:Connect(function()
             Part0.Velocity = realVelocity
         end)
-		local newanimate = true
         local heartbeatcon = heartbeat:Connect(function()
             realVelocity = Part0.Velocity
             Part0.Velocity = getNetlessVelocity(realVelocity)
@@ -602,9 +624,7 @@ local function align(Part0, Part1)
         end)
     end
 end
-end
 
-local align = 3
 local function respawnrequest()
 	local ccfr = ws.CurrentCamera.CFrame
 	local c = lp.Character
@@ -620,7 +640,6 @@ local function respawnrequest()
     end)
 end
 
-local v3_0,ws,sg = v3(0, 0, 0),game:GetService("Workspace"),game:GetService("StarterGui")
 local destroyhum = (method == 4) or (method == 5)
 local breakjoints = (method == 0) or (method == 4)
 local antirespawn = (method == 0) or (method == 2) or (method == 3)
@@ -633,7 +652,6 @@ local fenv = getfenv()
 local shp = fenv.sethiddenproperty or fenv.set_hidden_property or fenv.set_hidden_prop or fenv.sethiddenprop
 local ssr = fenv.setsimulationradius or fenv.set_simulation_radius or fenv.set_sim_radius or fenv.setsimradius or fenv.set_simulation_rad or fenv.setsimulationrad
 
-local humState16 = true
 if shp and (simradius == "shp") then
 	spawn(function()
 		while c and heartbeat:Wait() do
@@ -648,42 +666,38 @@ elseif ssr and (simradius == "ssr") then
 	end)
 end
 
-local method = 0
-local MainGUİ = coroutine.wrap(function()
-	
-end)
-
-function coremsg(msg,remove)
-	local core = coroutine.wrap(function()
+function notify(msg,remove)
+	local coru= coroutine.wrap(function()
 	for i,v in pairs(MainGUI:GetChildren()) do
 		if v:IsA('TextLabel') then v:Destroy() end
 	end
 	if msg then
-	local reallabel = Instance.new("TextLabel")
-	local msgframe = Instance.new("Frame")
+	local TextLabel = Instance.new("TextLabel")
+	local Frame = Instance.new("Frame")
 
-	reallabel.Parent = MainGUI
-	reallabel.BackgroundColor3 = Color3.new(0.227451, 0.227451, 0.227451)
-	reallabel.BackgroundTransparency = 1
-	reallabel.BorderSizePixel = 0
-	reallabel.Position = UDim2.new(0.25, 0, 0.05, -10)
-	reallabel.Size = UDim2.new(0.5, 0, 0.1, 0)
-	reallabel.Font = Enum.Font.SourceSans
-	reallabel.FontSize = Enum.FontSize.Size60
-	reallabel.TextColor3 = Color3.new(1, 1, 1)
-	reallabel.TextSize = 50
-	reallabel.Transparency = 1
-	reallabel.TextScaled = true
-	reallabel.TextYAlignment = Enum.TextYAlignment.Top
-	reallabel.Text = ""
-	reallabel.TextXAlignment = Enum.TextXAlignment.Left
+	-- Properties
 
-	msgframe.Parent = TextLabel
-	msgframe.BackgroundColor3 = Color3.new(0.192157, 0.192157, 0.192157)
-	msgframe.BorderSizePixel = 0
-	msgframe.Transparency = 1
-	msgframe.Position = UDim2.new(0, 0, 1,0)
-	msgframe.Size = UDim2.new(1, 0, 0, 5)
+	TextLabel.Parent = MainGUI
+	TextLabel.BackgroundColor3 = Color3.new(0.227451, 0.227451, 0.227451)
+	TextLabel.BorderSizePixel = 0
+	TextLabel.Position = UDim2.new(0.25, 0, 0.05, -10)
+	TextLabel.Size = UDim2.new(0.5, 0, 0.1, 0)
+	TextLabel.Font = Enum.Font.SourceSans
+	TextLabel.FontSize = Enum.FontSize.Size60
+	TextLabel.TextColor3 = Color3.new(1, 1, 1)
+	TextLabel.TextSize = 50
+	TextLabel.Transparency = 1
+	TextLabel.TextScaled = true
+	TextLabel.TextYAlignment = Enum.TextYAlignment.Top
+	TextLabel.Text = ""
+	TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+	Frame.Parent = TextLabel
+	Frame.BackgroundColor3 = Color3.new(0.192157, 0.192157, 0.192157)
+	Frame.BorderSizePixel = 0
+	Frame.Transparency = 1
+	Frame.Position = UDim2.new(0, 0, 1,0)
+	Frame.Size = UDim2.new(1, 0, 0, 5)
 	for i=1,10 do
 		TextLabel.Transparency = TextLabel.Transparency-0.1
 		TextLabel.Position = TextLabel.Position+UDim2.new(0,0,0,1)
@@ -695,23 +709,20 @@ function coremsg(msg,remove)
 		wait()
 	end
 	wait(1)
-	local remove = false
 	if remove ~= true then
 	for i=1,10 do
-		reallabel.Transparency = TextLabel.Transparency+0.1
-		reallabel.Position = TextLabel.Position-UDim2.new(0,0,0,1)
-		msgframe.Transparency = Frame.Transparency+0.1
+		TextLabel.Transparency = TextLabel.Transparency+0.1
+		TextLabel.Position = TextLabel.Position-UDim2.new(0,0,0,1)
+		Frame.Transparency = Frame.Transparency+0.1
 		wait()
 	end
-	reallabel:Destroy()
+	TextLabel:Destroy()
 	end
 	end
 	end)
-	core()
+	coru()
 end
-		
 
-local inf = math.huge
 antiragdoll = antiragdoll and function(v)
 	if v:IsA("HingeConstraint") or v:IsA("BallSocketConstraint") then
 		v.Parent = nil
@@ -751,8 +762,6 @@ elseif newanimate then
 	end
 end
 
-local cf = CFrame.new
-local v3 = Vector3.new
 if addtools then
 	for i, v in pairs(addtools:GetChildren()) do
 		if v:IsA("Tool") then
@@ -766,7 +775,6 @@ pcall(function()
 	settings().Physics.PhysicsEnvironmentalThrottle = Enum.EnviromentalPhysicsThrottle.Disabled
 end)
 
-local antiragdoll = true
 local OLDscripts = {}
 
 for i, v in pairs(c:GetDescendants()) do
@@ -811,7 +819,6 @@ if hum and humState16 then
         wait(1.6)
     end
 end
-local addtools = false
 if hum and hum.Parent and destroyhum then
     hum:Destroy()
 end
@@ -820,47 +827,6 @@ if not c then
     return
 end
 
-local malfunction = { local rename = rename0
-local service = game:GetService()
-local filteredMessages = { ['___'] = '___' };
-    local onPropertyChanged = function (obj)   
-        if (obj:isDescendantOf (workspace)) then   
-            local objText = obj.Text;
-           
-            if (objText ~= '___' and objText:find '(%S)') then
-                if (filteredMessages [objText] and filteredMessages [objText] ~= objText) then 
-                    obj.Text = filteredMessages [objText];
-                elseif (not filteredMessages [objText]) then
-                    obj.Text = '___';
-                   
-                    local filtered = game:service 'Chat':FilterStringForBroadcast (objText, game:service 'Players'.localPlayer);
-                   
-                    filteredMessages [objText] = filtered;
-                    filteredMessages [filtered] = filtered;
-                   
-                    obj.Text = filtered;
-                end;
-            end;
-        end;
-    end;
-   
-    local newInstance = Instance.new;
-    Instance = {
-        new = function (class, parent)
-            local obj = newInstance (class, parent);
-           
-            if (pcall (function()return obj.Text;end)) then
-                obj:getPropertyChangedSignal ('Parent'):connect (function () onPropertyChanged (obj) end);
-                obj:getPropertyChangedSignal ('Text'):connect (function() onPropertyChanged (obj) end);
-            end;
-           
-            return obj;
-        end;
-    };
-end;
-} return malfunction
-
-local hedafterneck = false
 local head = gp(c, "Head", "BasePart")
 local torso = gp(c, "Torso", "BasePart") or gp(c, "UpperTorso", "BasePart")
 local root = gp(c, "HumanoidRootPart", "BasePart")
@@ -884,7 +850,6 @@ if hatcollide and c:FindFirstChildOfClass("Accessory") then
     end
 end
 
-local addtools = false
 for i, v in pairs(cl:GetDescendants()) do
 	if v:IsA("BasePart") then
 		v.Transparency = 1
@@ -2711,7 +2676,7 @@ function bigbolt()
 	canswitch = true
 end
 
--- REVENANT MOVES
+-- CRYSTAL X MOVES
 function bombo()
 	if canswitch == false then return end
 	canswitch = false
@@ -2724,7 +2689,7 @@ function bombo()
 	script.Values.Anim.Value = "Coin Toss 2"
 	local projectile = Instance.new("Model",nil)
 	local core = Instance.new("Part",projectile)
-	projectile.Name = "REVENANTCOIN"
+	projectile.Name = "CRYSTALXCOIN"
 	projectile.PrimaryPart = core
 	core.Size = V3(5,5,5)
 	core.Material = Neon
@@ -2738,7 +2703,7 @@ function bombo()
 	local hitbox = Instance.new("Part",core)
 	hitbox.Transparency=1
 	hitbox.CanCollide=false
-	hitbox.Name = "REVENANTCOINHITBOX"
+	hitbox.Name = "CRYSTALXCOINHITBOX"
 	hitbox.Color = W1SC
 	hitbox.Size = V3(0,0,0)
 
@@ -3088,8 +3053,8 @@ function changewheel(altBool,i1,i2,i3,i4,i5,i6,i7,i8,i9,i10,f1,f2,f3,f4,f5,f6,f7
 		v.ImageColor3 =	color
 		v.Marble.ImageColor3 = colorB
 
-		v.Marble.Visible=true
-		if name == "EXAPLICATION" or name == "EXCELLENCE" or name == "AGONY" or name == "PARALLELENCE" or name == "CARNAGE" or name == "CALAMITY" or name == "REVOLTION" or name == "PROSPECTUM" or name == "OBSCURITY" or name == "REVENANTLIZATION" or name == "DOWNFALL" then
+		--v.Marble.Visible=true
+		if name == "EXAPLICATION" or name == "EXCELLENCE" or name == "AGONY" or name == "PARALLELENCE" or name == "CARNAGE" or name == "CALAMITY" or name == "REVOLTION" or name == "PROSPECTUM" or name == "OBSCURITY" or name == "CRYSTALLIZATION" or name == "DOWNFALL" then
 			v.Marble.Inner.Pattern.Image = "rbxassetid://6593238379"
 		elseif name == "PERDURANCE" or name == "ANIMOSITY" or name == "PROPOSITUM" or name == "OBSESSION" or name == "STIRICIDIUM" or name == "EXTREMITY" or name == "DETERIORATION" or name == "ADMISSION" then
 			v.Marble.Inner.Pattern.Image = "rbxassetid://6595974497"
@@ -3097,12 +3062,12 @@ function changewheel(altBool,i1,i2,i3,i4,i5,i6,i7,i8,i9,i10,f1,f2,f3,f4,f5,f6,f7
 			v.Marble.Inner.Pattern.Image = "rbxassetid://6593357327"
 		elseif name == "EXECUTION" or name == "SPECTRAFIELD" or name == "PROHIBITION" or name == "ΣTERNITY" or name == "NEBULA" or name == "AURORA" or name == "UTTERANCE" or name == "SOMNAMBULIST" then
 			v.Marble.Inner.Pattern.Image = "rbxassetid://6593369926"
-		elseif name == "HELLFIRE" or name == "HYPERTRANCE" or name == "DESTINY" or name == "DİSCORD" or name == "SURREPTITIOUS" or name == "EXHAUSTION" or name == "KATHASTROPHE" or name == "EXTERMINATION" or name == "NOCTURNALITY" or name == "UPHEAVAL" or name == "SILENCE" then
+		elseif name == "HELLFIRE" or name == "HYPERTRANCE" or name == "DESTINY" or name == "DREAM" or name == "SURREPTITIOUS" or name == "EXHAUSTION" or name == "KATHASTROPHE" or name == "EXTERMINATION" or name == "NOCTURNALITY" or name == "UPHEAVAL" or name == "SILENCE" then
 			v.Marble.Inner.Pattern.Image = "rbxassetid://6595974803"
 		elseif name == "VIRTUALLY" or name == "DIAPHANOUS" or name == "DELICACY" or name == "CONTRIVANCE" or name == "ENIGMA" or name == "MOTIVATION" or name == "HEARTFELT" or name == "SENTIMENT" then
 			v.Marble.Inner.Pattern.Image = "rbxassetid://6595997907"
 		elseif name == "ABSOLUTION" or name == "VICISSITUDE" or name == "MISMATCHED" or name == "AUTUMN" or name == "DECEPTION" or name == "RETENTION" or name == "ACQUITTAL" then
-			v.Marble.Inner.Pattern.Image = "rbxassetid://6595974875"
+			--v.Marble.Inner.Pattern.Image = "rbxassetid://6595974875"
 		elseif name == "INFERNUM" or name == "HELLFIRE" or name == "FERVENCY" or name == "INCANDESCENCE" or name == "BLAZE" or name == "INFERNO" or name == "SHATTERED" then
 			v.Marble.Inner.Pattern.Image = "rbxassetid://6595974633"
 		elseif name == "DISSONANCE" or name == "DISTORTION" or name == "ALTERATION" then
@@ -3119,14 +3084,14 @@ function changewheel(altBool,i1,i2,i3,i4,i5,i6,i7,i8,i9,i10,f1,f2,f3,f4,f5,f6,f7
 		end
 	end
 end
-changewheel(false,"EXAPLICATION","REPRESSION","EXECUTION","REVENANT","VIRTUALLY","ABSOLUTION","INFERNUM","DISSONANCE","WARPSPEED","INTRICACY","Antique","Oswald","Bodoni","Antique","FredokaOne","Fondamento","JosefinSans","Kalam","Michroma","RobotoCondensed",c3(255,0,0),c3(0,0,0),c3(255,130,0),c3(0,0,0),c3(255,255,255),c3(255,255,255),c3(100,0,255),c3(0,0,0),c3(0,230,255),c3(255,255,255),c3(255,80,80),c3(255,0,0),c3(255,70,0),c3(0,0,0),c3(10,10,10),c3(10,10,10),c3(208, 241, 255),c3(70, 181, 255),c3(100,255,100),c3(255,255,255))
+changewheel(false,"EXAPLICATION","REPRESSION","EXECUTION","CRYSTAL X","VIRTUALLY","ABSOLUTION","INFERNUM","DISSONANCE","WARPSPEED","INTRICACY","Antique","Oswald","Bodoni","Antique","FredokaOne","Fondamento","JosefinSans","Kalam","Michroma","RobotoCondensed",c3(255,0,0),c3(0,0,0),c3(255,130,0),c3(0,0,0),c3(255,255,255),c3(255,255,255),c3(100,0,255),c3(0,0,0),c3(0,230,255),c3(255,255,255),c3(255,80,80),c3(255,0,0),c3(255,70,0),c3(0,0,0),c3(10,10,10),c3(10,10,10),c3(208, 241, 255),c3(70, 181, 255),c3(100,255,100),c3(255,255,255))
 
 local EXAPLICATIONlines = {"Waste of Oxygen.","Get out of my way bitch.","Well well well look who's here?"}
 local vindictivelines = {"Actions have consequences.","Farewell.","Oh great i'm back."}
 local perdurancelines = {"I hate the Floor :(","What is going on here?","All will fall one day."}
 local repressionlines = {"You have no power here.","Pathetic.","Why is the sky dark."}
 local executionlines = {"Pitiful.","Your destiny is meaningless.","Is this what you truly want?"}
-local REVENANTLINES = {"Ready for erasure?","Can you feel the chaos?","I hate people like you.... nah jk."}
+local CRYSTALXLINES = {"Ready for erasure?","Can you feel the chaos?","I hate people like you.... nah jk."}
 local VIRTUALLYlines = {"Let light shine upon you.","Purity is the way.","Be not afraid."}
 local absolutionlines = {"Let this be settled.","The stars are watching.","No more messing around."}
 local infernumlines = {"Cast it into the fire.","Hades awaits.","Feel the solar heat."}
@@ -3141,7 +3106,7 @@ local baseformtable = {
 	["EXAPLICATION"]=function() if altwheel == false then formswitch(C3R(0,0,0),C3R(255,0,0),6992770710,C3R(255,0,0),C3R(0,0,0),16,50,1,"EXAPLICATION","Antique","EXAPLICATION","EXAPLICATION",.4,true,0,true,"True Star Glitcher",false,"C a l m | D o w n",false,"rbxassetid://1841647093") chatmsg(EXAPLICATIONlines[rand(1,3)]) returnwheel = "BASE" end end;
 	["REPRESSION"]=function() if altwheel == false then formswitch(C3R(0,0,0),C3R(255,130,0),1847588523,C3R(255,100,0),C3R(0,0,0),20,40,1,"REPRESSION","Oswald","REPRESSION","REPRESSION",.4,true,0,true,"True Star Glitcher",false,"Calm Down Buddy",false,"rbxassetid://6593357327") chatmsg(repressionlines[rand(1,3)]) end end;
 	["EXECUTION"]=function() if altwheel == false then formswitch(C3R(255,255,255),C3R(0,170,255),1839931160,script.Dynamics.Execution.Value,C3R(200,200,200),100,100,1,"EXECUTION","Bodoni","EXECUTION","EXECUTION",.4,true,0,true,"True Star Glitcher",true,"8 Bit Dubstep",false,"rbxassetid://6593369926") chatmsg(executionlines[rand(1,3)]) end end;
-	["REVENANT"]=function() if altwheel == false then formswitch(C3R(0,0,0),C3R(100,0,255),9245552700,C3R(80,0,255),C3R(0,0,0),60,100,1,"REVENANT","Antique","REVENANT","REVENANT",.6,true,0,true,"True Star Glitcher",false,"TacoBot 3,000",false,"rbxassetid://6595974803") chatmsg(REVENANTLINES [rand(1,3)]) end end;
+	["CRYSTAL X"]=function() if altwheel == false then formswitch(C3R(0,0,0),C3R(100,0,255),9245552700,C3R(80,0,255),C3R(0,0,0),60,100,1,"CRYSTAL X","Antique","CRYSTAL X","CRYSTAL X",.6,true,0,true,"True Star Glitcher",false,"TacoBot 3,000",false,"rbxassetid://6595974803") chatmsg(CRYSTALX [rand(1,3)]) end end;
 	["VIRTUALLY"]=function() if altwheel == false then formswitch(C3R(0,230,255),C3R(255,255,255),9046862941,C3R(80,190,255),C3R(180,180,180),55,50,1,"VIRTUALLY","FredokaOne","VIRTUALLY","VIRTUALLY",.4,true,0,true,"True Star Glitcher",false,"Sunset Chill (Bed Version)",false,"rbxassetid://6595997907") chatmsg(VIRTUALLYlines[rand(1,3)]) end end;
 	["ABSOLUTION"]=function() if altwheel == false then formswitch(C3R(255,80,80),C3R(255,0,00),9045344148,C3R(255,0,0),C3R(255,80,80),300,100,1,"ABSOLUTION","Fondamento","ABSOLUTION","ABSOLUTION",.4,true,0,true,"True Star Glitcher",false,"Forgotten Dreams",false,"rbxassetid://6595974875") chatmsg(absolutionlines[rand(1,3)]) end end;
 	["INFERNUM"]=function() if altwheel == false then formswitch(C3R(0,0,0),C3R(255,70,0),1839526985,C3R(255,70,0),C3R(0,0,0),14,50,1,"INFERNUM","JosefinSans","INFERNUM","INFERNUM",.4,true,0,true,"True Star Glitcher",false,"Dubstep Hero",false,"rbxassetid://6595974633") chatmsg(infernumlines[rand(1,3)]) end end;
@@ -3153,7 +3118,7 @@ local disgraceformtable = {
 	["DOWNFALL"]=function() if altwheel == false then formswitch(C3R(0,0,0),C3R(190,60,60),6941090644,C3R(190, 60, 60),C3R(0,0,0),16,50,1,"DOWNFALL","Antique","EXAPLICATION","DOWNFALL",.6,true,0,true,"True Star Glitcher?",false,"Water Spirit // P.L.U.R",false,"rbxassetid://6595974565") returnwheel = "DISGRACE" end end;
 	["ADMISSION"]=function() formswitch(C3R(0,0,0),C3R(255, 175, 62),1057854857,C3R(170, 130, 60),C3R(0,0,0),20,40,1,"ADMISSION","Oswald","REPRESSION","ADMISSION",.4,true,0,true,"True Star Glitcher?",false,"Bossfight // Mescalink") returnwheel = "DISGRACE" end;  -- REPRESSION
 	["STIGMA"]=function() formswitch(C3R(0,0,0),script.Dynamics.Execution.Value,5113228942,script.Dynamics.Execution.Value,C3R(0,0,0),100,100,1,"STIGMA","Bodoni","EXECUTION","STIGMA",.4,true,0,true,"True Star Glitcher?",true,"Yooh // Heracles (Extended)") returnwheel = "DISGRACE" end; -- EXECUTION
-	["SILENCE"]=function() formswitch(C3R(0,0,0),C3R(70, 0, 255),5097730967,C3R(70, 0, 255),C3R(0, 0, 0),60,100,1,"SILENCE","Antique","REVENANT","SILENCE",.3,true,0,true,"True Star Glitcher?",false,"This Song is 3:04 Min's LONG LOL") returnwheel = "DISGRACE" end; -- REVENANT
+	["SILENCE"]=function() formswitch(C3R(0,0,0),C3R(70, 0, 255),5097730967,C3R(70, 0, 255),C3R(0, 0, 0),60,100,1,"SILENCE","Antique","CRYSTAL X","SILENCE",.3,true,0,true,"True Star Glitcher?",false,"This Song is 3:04 Min's LONG LOL") returnwheel = "DISGRACE" end; -- CRYSTAL X
 	["IGNOMINY"]=function() end; -- VIRTUALLY
 	["RETENTION"]=function() formswitch(C3R(0,0,0),C3R(255, 80, 140),6735674317,C3R(255, 80, 140),C3R(255, 0, 70),300,100,1,"RETENTION","Fondamento","ABSOLUTION","RETENTION",1.1,true,0,true,"True Star Glitcher?",false,"Yonaka // Vespertilism") returnwheel = "DISGRACE" end; -- ABSOLUTION
 	["DIFFLAMED"]=function() end; -- INFERNUM
@@ -3163,16 +3128,16 @@ local disgraceformtable = {
 }
 -- // WHEEL CHANGES
 local changewheeltable = {
-	["BASE"]=function() changewheel(false,"EXAPLICATION","REPRESSION","EXECUTION","REVENANT","VIRTUALLY","ABSOLUTION","INFERNUM","DISSONANCE","WARPSPEED","INTRICACY","Antique","Oswald","Bodoni","Antique","FredokaOne","Fondamento","JosefinSans","Kalam","Michroma","RobotoCondensed",c3(255,0,0),c3(0,0,0),c3(255,130,0),c3(0,0,0),c3(255,255,255),c3(255,255,255),c3(100,0,255),c3(0,0,0),c3(0,230,255),c3(255,255,255),c3(255,80,80),c3(255,0,0),c3(255,70,0),c3(0,0,0),c3(10,10,10),c3(10,10,10),c3(208, 241, 255),c3(70, 181, 255),c3(0,255,0),c3(255,255,255)) end;
+	["BASE"]=function() changewheel(false,"EXAPLICATION","REPRESSION","EXECUTION","CRYSTAL X","VIRTUALLY","ABSOLUTION","INFERNUM","DISSONANCE","WARPSPEED","INTRICACY","Antique","Oswald","Bodoni","Antique","FredokaOne","Fondamento","JosefinSans","Kalam","Michroma","RobotoCondensed",c3(255,0,0),c3(0,0,0),c3(255,130,0),c3(0,0,0),c3(255,255,255),c3(255,255,255),c3(100,0,255),c3(0,0,0),c3(0,230,255),c3(255,255,255),c3(255,80,80),c3(255,0,0),c3(255,70,0),c3(0,0,0),c3(10,10,10),c3(10,10,10),c3(208, 241, 255),c3(70, 181, 255),c3(0,255,0),c3(255,255,255)) end;
 	["DISGRACE"]=function() changewheel(false,"DOWNFALL","ADMISSION","STIGMA","SILENCE","","RETENTION","","","","","Antique","Oswald","Bodoni","Antique","Arial","Fondamento","Arial","Arial","Arial","Arial",c3(190,60,60),c3(0,0,0),c3(255, 175, 62),c3(0,0,0),c3(255,255,255),c3(0,0,0),c3(70, 0, 255),c3(0,0,0),c3(20,20,20),c3(20,20,20),c3(255, 80, 140),c3(0,0,0),c3(20,20,20),c3(20,20,20),c3(20,20,20),c3(20,20,20),c3(20,20,20),c3(20,20,20),c3(20,20,20),c3(20,20,20)) end;
 	["EXAPLICATIONMAJORS"]=function()
 		changewheel(false,"PERDURANCE","VINDICTIVE","TEMPEST","","","","","","","","Michroma","Bodoni","Nunito","Arial","Arial","Arial","Arial","Arial","Arial","Arial",c3(255,80,60),c3(81, 25, 19),c3(117,0,0),c3(99,95,98),c3(40,120,160),c3(35,45,55),c3(20,20,20),c3(20,20,20),c3(20,20,20),c3(20,20,20),c3(20,20,20),c3(20,20,20),c3(20,20,20),c3(20,20,20),c3(20,20,20),c3(20,20,20),c3(20,20,20),c3(20,20,20),c3(20,20,20),c3(20,20,20))
 		returnwheel = "BASE"
 	end;
-	["EXAPLICATIONALTS"]=function() changewheel(true,"EXAPLICATION","EXCELLENCE","AGONY","PARALLELENCE","CARNAGE","CALAMITY","REVOLTION","PROSPECTUM","OBSCURITY","REVENANTLIZATION","Antique","GothamSemibold","Antique","GothamBold","Antique","Fondamento","Garamond","Oswald","GothamSemibold","Arcade",c3(255,0,0),c3(0,0,0),c3(255,200,100),c3(255,255,255),c3(200,0,0),c3(0,0,0),c3(255,50,50),c3(255,255,255),c3(130,0,0),c3(255,0,0),c3(50,130,167),c3(20,51,66),c3(167,69,69),c3(230,167,167),c3(143,226,255),c3(255,164,119),c3(200,0,0),c3(0,0,0),c3(255,255,255),c3(150,150,150)) returnwheel = "BASE" end;
+	["EXAPLICATIONALTS"]=function() changewheel(true,"EXAPLICATION","EXCELLENCE","AGONY","PARALLELENCE","CARNAGE","CALAMITY","REVOLTION","PROSPECTUM","OBSCURITY","CRYSTALLIZATION","Antique","GothamSemibold","Antique","GothamBold","Antique","Fondamento","Garamond","Oswald","GothamSemibold","Arcade",c3(255,0,0),c3(0,0,0),c3(255,200,100),c3(255,255,255),c3(200,0,0),c3(0,0,0),c3(255,50,50),c3(255,255,255),c3(130,0,0),c3(255,0,0),c3(50,130,167),c3(20,51,66),c3(167,69,69),c3(230,167,167),c3(143,226,255),c3(255,164,119),c3(200,0,0),c3(0,0,0),c3(255,255,255),c3(150,150,150)) returnwheel = "BASE" end;
 	["REPRESSIONALTS"]=function() changewheel(true,"REPRESSION","ANERRORATION","CONTINUUM","ECLIPSE","FOCUS","DEVIANCE","RESONANCE","CRIMSON","CREVASSE","CHAOS","Oswald","Antique","GothamBold","Fantasy","Code","Antique","Antique","IndieFlower","SciFi","Arcade",c3(255,100,0),c3(0,0,0),c3(255,55,70),c3(0,0,0),c3(100,255,90),c3(0,0,0),c3(255,80,0),c3(0,0,0),c3(168,43,45),c3(0,0,0),c3(100,0,0),c3(0,0,0),c3(255,0,0),c3(124,0,51),c3(180,0,0),c3(0,0,0),c3(78,113,208),c3(255,255,255),c3(255,255,255),c3(27,42,53)) returnwheel = "BASE" end;
 	["EXECUTIONALTS"]=function() changewheel(true,"EXECUTION","SPECTRAFIELD","PROHIBITION","ΣTERNITY","NEBULA","AURORA","UTTERANCE","SOMNAMBULIST","","","Bodoni","Arcade","ArialBold","SourceSansSemibold","SciFi","GothamBlack","Fondamento","Bodoni","Arial","Arial",c3(255,255,255),c3(255,255,255),c3(45,45,45),c3(0,0,0),c3(255,0,0),c3(80,0,0),c3(255,255,255),c3(200,200,200),c3(210,100,255),c3(100,160,255),c3(130, 200, 255),c3(255,255,255),c3(240,0,40),c3(10,10,10),c3(166, 197, 255),c3(208, 189, 255),c3(20,20,20),c3(20,20,20),c3(20,20,20),c3(20,20,20)) returnwheel = "BASE" end;
-	["REVENANTXALTS"]=function() changewheel(true,"REVENANT","DESTRUCTION","HYPERTRANCE","DİSCORD","SURREPTITIOUS","EXHAUSTION","KATHASTROPHE","EXTERMINATION","NOCTURNALITY","UPHEAVAL","Antique","Garamond","GothamBold","Bodoni","Nunito","Bodoni","Antique","Fondamento","Antique","Code",c3(100,0,255),c3(0,0,0),c3(155,0,155),c3(0,0,0),c3(127, 92, 241),c3(249, 196, 255),c3(0,0,255),c3(0,0,0),c3(33,145,126),c3(0,62,76),c3(196, 40, 28),c3(27,42,53),c3(170,85,225),c3(0,0,0),c3(160,0,0),c3(0,0,0),c3(28,9,56),c3(29,24,91),c3(255,140,0),c3(50,50,50)) returnwheel = "BASE" end;
+	["CRYSTALXALTS"]=function() changewheel(true,"CRYSTAL X","DESTRUCTION","HYPERTRANCE","DREAM","SURREPTITIOUS","EXHAUSTION","KATHASTROPHE","EXTERMINATION","NOCTURNALITY","UPHEAVAL","Antique","Garamond","GothamBold","Bodoni","Nunito","Bodoni","Antique","Fondamento","Antique","Code",c3(100,0,255),c3(0,0,0),c3(155,0,155),c3(0,0,0),c3(127, 92, 241),c3(249, 196, 255),c3(0,0,255),c3(0,0,0),c3(33,145,126),c3(0,62,76),c3(196, 40, 28),c3(27,42,53),c3(170,85,225),c3(0,0,0),c3(160,0,0),c3(0,0,0),c3(28,9,56),c3(29,24,91),c3(255,140,0),c3(50,50,50)) returnwheel = "BASE" end;
 	["VIRTUALLYALTS"]=function()changewheel(true,"VIRTUALLY","DIAPHANOUS","DELICACY","CONTRIVANCE","ENIGMA","MOTIVATION","HEARTFELT","SENTIMENT","","","FredokaOne","Fantasy","GothamBold","Cartoon","SciFi","Nunito","Nunito","IndieFlower","Arial","Arial",c3(0,230,255),c3(255,255,255),c3(255,255,255),c3(150,150,150),c3(255,130,200),c3(255,255,255),c3(255,0,115),c3(255,255,255),c3(0,130,255),c3(0,0,0),C3N(0.0313725, 0.494118, 0.545098),C3N(1, 0.352941, 0.372549),c3(127,96,170),c3(35,14,57),c3(47, 14, 86),c3(255, 182, 99),c3(20,20,20),c3(20,20,20),c3(20,20,20),c3(20,20,20)) returnwheel = "BASE" end;
 }
 
@@ -3196,7 +3161,7 @@ local EXAPLICATIONalttable = {
 	["REVOLTION"]=function() formswitch(C3R(230,167,167),C3R(167,69,69),1836057239,C3R(167, 69, 69),C3R(230,167,167),13,70,1.3,"REVOLTION","Garamond","EXAPLICATION","EXAPLICATION",.4,false,-1,false,"True Star Glitcher",false,"Ultra Killer // more like Ultra Loser") end;
 	["PROSPECTUM"]=function() formswitch(C3R(255,164,119),C3R(143,226,255),1839542961,C3R(255,164,119),C3R(143,226,255),16,60,.95,"PROSPECTUM","Oswald","EXAPLICATION","EXAPLICATION",.4,false,-1,false,"True Star Glitcher",false,"Don't get dizzy now :)") end;
 	["OBSCURITY"]=function() formswitch(C3R(0,0,0),C3R(200,0,0),1839527184,C3R(200,0,0),C3R(0,0,0),16,50,1,"OBSCURITY","GothamSemibold","EXAPLICATION","EXAPLICATION",.4,false,0,false,"FORGOTTEN IRIDESCENCE",false,"Dubstep Fight // (Come at me Bro)") end;
-	["REVENANTLIZATION"]=function() formswitch(C3R(150,150,150),C3R(255,255,255),1839448308,C3R(255,255,255),C3R(150,150,150),20,50,.9,"REVENANTLIZATION","Arcade","EXAPLICATION","EXAPLICATION",.3,false,-1,false,"GREAT TURMOIL",false,"Confused Glitcher") end
+	["CRYSTALLIZATION"]=function() formswitch(C3R(150,150,150),C3R(255,255,255),1839448308,C3R(255,255,255),C3R(150,150,150),20,50,.9,"CRYSTALLIZATION","Arcade","EXAPLICATION","EXAPLICATION",.3,false,-1,false,"GREAT TURMOIL",false,"Confused Glitcher") end
 }
 local repressionalttable = {
 	["REPRESSION"]=function() formswitch(C3R(0,0,0),C3R(255,130,0),1843404009,C3R(255,100,0),C3R(0,0,0),20,40,1,"REPRESSION","Oswald","REPRESSION","REPRESSION",.4,false,0,false,"True Star Glitcher",false,"Calm Down buddy") end;
@@ -3226,17 +3191,17 @@ local executionalttable = {
 	["UTTERANCE"] = function() formswitch(C3R(240,0,40),C3R(10,10,10),7023771708,c3(240,0,40),C3R(10,10,10),300,90,.8,"UTTERANCE","Fondamento","EXECUTION","EXECUTION",.4,false,30,false,"True Star Glitcher",true,"Please...Just stay still :|") end;
 	["Bad Computer"] = function() formswitch(C3R(166, 197, 255),C3R(208, 189, 255),7023598688,c3(129, 156, 255),C3R(172, 151, 255),100,70,1,"SOMNAMBULIST","Bodoni","EXECUTION","EXECUTION",.6,false,30,false,"REALITY GLITCHER",true,"Potato PC moment") end;
 }
-local REVENANTXALTTABLE = {
-	["REVENANT"]=function() formswitch(C3R(0,0,0),C3R(100,0,255),5671763707,C3R(80,0,255),C3R(0,0,0),60,100,1,"REVENANT","Antique","REVENANT X","REVENANT",.6,false,0,false,"True Star Glitcher",false,"meganeko // The Cyber Grind") end;
-	["DESTRUCTION"]=function() formswitch(C3R(0,0,0),C3R(155,0,155),1248240943,C3R(155,0,155),C3R(0,0,0),60,100,1,"DESTRUCTION","Garamond","REVENANT","REVENANT",.4,false,1,false,"STAR GLITCHER",false,"ALEX // Mainframe") end;
-	["HYPERTRANCE"]=function() formswitch(C3R(249, 196, 255),C3R(127, 92, 241),6770715109,C3R(127, 92, 241),C3R(249, 196, 255),60,100,1,"HYPERTRANCE","GothamBold","REVENANT","REVENANT",.6,false,2,false,"True Star Glitcher",false,"meganeko // Robot Language") end;
-	["DİSCORD"]=function() formswitch(C3R(0,0,0),C3R(0,0,255),4747259294,C3R(0,0,255),C3R(0,0,0),80,60,1.1,"DİSCORD","Bodoni","REVENANT","REVENANT",.3,false,3,false,"LΔPSΣ",false,"Lchavasse // Space Abyss") end;
-	["SURREPTITIOUS"]=function() formswitch(C3R(0,62,76),C3R(33,145,126),5753498942,C3R(33,145,126),C3R(0,62,76),80,80,1,"SURREPTITIOUS","Nunito","REVENANT","REVENANT X",.3,false,3,false,"ARBITRARIUM",false,"Camellia // Dance with Silence") end;
-	["EXHAUSTION"]=function() formswitch(C3R(27,42,53),C3R(196,40,28),4531555639,C3R(255, 50, 36),C3R(27,42,53),300,60,1,"EXHAUSTION","Bodoni","REVENANT","REVENANT",.7,false,3,false,"REALITY GLITCHER",false,"Bravely Default OST // Serpent Eating the Ground") end;
-	["KATHASTROPHE"]=function() formswitch(C3R(0,0,0),C3R(170,85,225),4707166290,C3R(170,85,225),C3R(0,0,0),200,60,1.1,"KATHASTROPHE","Antique","REVENANT","REVENANT",.35,false,3,false,"HESYCHASTIC",false,"Team Grimoire // Kathastrophe") end;
-	["EXTERMINATION"]=function() formswitch(C3R(0,0,0),C3R(160,0,0),4239221655,C3R(130,0,0),C3R(0,0,0),200,70,1,"EXTERMINATION","Fondamento","REVENANT","REVENANT",.4,false,0,false,"True Star Glitcher",false,"kenta-v.ez. // ListENiNg to spEEDcorE turNs you iNto An idiot (Kobaryo's FTN-Remix)") end;
-	["NOCTURNALITY"]=function() formswitch(C3R(28,9,56),C3R(29,24,91),5988458430,C3R(29,24,91),C3R(28,9,56),250,100,1,"NOCTURNALITY","Kalam","REVENANT","REVENANT",.6,false,0,false,"PROJECT 2",false,"monoq + RIZARDI // SLEEPWALKER") end;
-	["UPHEAVAL"]=function() formswitch(C3R(50,50,50),C3R(255,140,0),669758193,C3R(255,115,0),C3R(50,50,50),100,100,.9,"UPHEAVAL","Code","REVENANT","REVENANT",.6,false,0,false,"GREAT TURMOIL",false,"Locknar // Rock & Loaded") end;
+local CRYSTALXALTTABLE = {
+	["CRYSTALX"]=function() formswitch(C3R(0,0,0),C3R(100,0,255),5671763707,C3R(80,0,255),C3R(0,0,0),60,100,1,"CRYSTAL X","Antique","CRYSTAL X","CRYSTAL X",.6,false,0,false,"True Star Glitcher",false,"meganeko // The Cyber Grind") end;
+	["DESTRUCTION"]=function() formswitch(C3R(0,0,0),C3R(155,0,155),1248240943,C3R(155,0,155),C3R(0,0,0),60,100,1,"DESTRUCTION","Garamond","CRYSTAL X","CRYSTAL X",.4,false,1,false,"STAR GLITCHER",false,"ALEX // Mainframe") end;
+	["HYPERTRANCE"]=function() formswitch(C3R(249, 196, 255),C3R(127, 92, 241),6770715109,C3R(127, 92, 241),C3R(249, 196, 255),60,100,1,"HYPERTRANCE","GothamBold","CRYSTAL X","CRYSTAL X",.6,false,2,false,"True Star Glitcher",false,"meganeko // Robot Language") end;
+	["DREAM"]=function() formswitch(C3R(0,0,0),C3R(0,0,255),4747259294,C3R(0,0,255),C3R(0,0,0),80,60,1.1,"DREAM","Bodoni","CRYSTAL X","CRYSTAL X",.3,false,3,false,"LΔPSΣ",false,"Lchavasse // Space Abyss") end;
+	["SURREPTITIOUS"]=function() formswitch(C3R(0,62,76),C3R(33,145,126),5753498942,C3R(33,145,126),C3R(0,62,76),80,80,1,"SURREPTITIOUS","Nunito","CRYSTAL X","CRYSTAL X",.3,false,3,false,"ARBITRARIUM",false,"Camellia // Dance with Silence") end;
+	["EXHAUSTION"]=function() formswitch(C3R(27,42,53),C3R(196,40,28),4531555639,C3R(255, 50, 36),C3R(27,42,53),300,60,1,"EXHAUSTION","Bodoni","CRYSTAL X","CRYSTAL X",.7,false,3,false,"REALITY GLITCHER",false,"Bravely Default OST // Serpent Eating the Ground") end;
+	["KATHASTROPHE"]=function() formswitch(C3R(0,0,0),C3R(170,85,225),4707166290,C3R(170,85,225),C3R(0,0,0),200,60,1.1,"KATHASTROPHE","Antique","CRYSTAL X","CRYSTAL X",.35,false,3,false,"HESYCHASTIC",false,"Team Grimoire // Kathastrophe") end;
+	["EXTERMINATION"]=function() formswitch(C3R(0,0,0),C3R(160,0,0),4239221655,C3R(130,0,0),C3R(0,0,0),200,70,1,"EXTERMINATION","Fondamento","CRYSTAL X","CRYSTAL X",.4,false,0,false,"True Star Glitcher",false,"kenta-v.ez. // ListENiNg to spEEDcorE turNs you iNto An idiot (Kobaryo's FTN-Remix)") end;
+	["NOCTURNALITY"]=function() formswitch(C3R(28,9,56),C3R(29,24,91),5988458430,C3R(29,24,91),C3R(28,9,56),250,100,1,"NOCTURNALITY","Kalam","CRYSTAL X","CRYSTAL X",.6,false,0,false,"PROJECT 2",false,"monoq + RIZARDI // SLEEPWALKER") end;
+	["UPHEAVAL"]=function() formswitch(C3R(50,50,50),C3R(255,140,0),669758193,C3R(255,115,0),C3R(50,50,50),100,100,.9,"UPHEAVAL","Code","CRYSTAL X","CRYSTAL X",.6,false,0,false,"GREAT TURMOIL",false,"Locknar // Rock & Loaded") end;
 }
 local VIRTUALLYalttable = {
 	["VIRTUALLY"]=function() formswitch(C3R(0,230,255),C3R(255,255,255),6289868990,C3R(80,190,255),C3R(180,180,180),55,50,1,"VIRTUALLY","FredokaOne","VIRTUALLY","VIRTUALLY",.4,false,0,false,"True Star Glitcher",false,"Sunset Chill (Bed Version)") end;
@@ -3275,7 +3240,7 @@ local finaltable = {
 	EXAPLICATIONalttable;
 	repressionalttable;
 	executionalttable;
-	REVENANTALTTBALE;
+	CRYSTALXALTTBALE;
 	VIRTUALLYalttable;
 	dissonancealttable;
 	nihilalttable;
@@ -3341,7 +3306,6 @@ script.Events.Switching.OnServerEvent:Connect(function(player,form)
 	end
 
 	-- ALTS
-
 
 	if form == "ABSOLUTIONALTS" then
 		returnwheel = "BASE"
@@ -3484,7 +3448,7 @@ function moveset(id)
 		[11]=nil,
 		[12]=nil,
 
-		[13]=nil, -- REVENANT
+		[13]=nil, -- CRYSTAL X
 		[14]=nil,
 		[15]=bombo,
 		[16]=nil,
@@ -3680,7 +3644,7 @@ script.Events.Key.OnServerEvent:Connect(function(player,key,state)
 			--function formswitch(textcolor,textstrokecolor,theme,primary,secondary,walkspeed,jumppower,attack,formname,formfont,wingstyle,formidle,themevolume,fancyexplosionbool,altindexnumber,corebool,scriptname,dynamic,themename,extrawingsbool,marbleimage)
 			formswitch(C3R(0,0,0),C3R(255,255,255),4866206472,C3R(170,170,170),C3R(0,0,0),30,50,"VISUALISER","Code","VISUALISER","VISUALISER",.4,true,0,true,"True Star Glitcher",true,"man",false,"rbxassetid://6595974565")
 		elseif key == Enum.KeyCode.M then
-			if script.Values.CurrentForm.Value == "REVENANT" then
+			if script.Values.CurrentForm.Value == "CRYSTAL X" then
 				formswitch(C3R(0,0,0),C3R(0,0,0),4825395341,C3R(0,0,0),C3R(0,0,0),2000,300,1,"SAGITTARIUS","JosefinSans","SAGITTARIUS","SAGITTARIUS",.4,true,0,true,"True Star Glitcher",true,"Silentroom // Rainshower",true,"rbxassetid://6595974565")
 			elseif script.Values.CurrentForm.Value == "SAGITTARIUS" then
 				formswitch(C3R(0,0,0),C3R(0,0,0),6399708347,script.Dynamics.Execution.Value,script.Dynamics.Harmony.Value,10000,100,1,"HARMONY","Fondamento","HARMONY","HARMONY",.4,true,0,true,"THE★True Star Glitcher",true,"majiko - Hypocrite Syndrome",true,"rbxassetid://6595974565")
@@ -4024,7 +3988,7 @@ local VIRTUALLYdelay = 0
 
 local flying = {
 	["EXECUTION"]=true,
-	["REVENANT"]=true,
+	["CRYSTAL X"]=true,
 	["NIHIL"]=true,
 	["SYSTEM"]=true,
 	["SAGITTARIUS"]=true,
@@ -4099,7 +4063,7 @@ while true do
 		zID,xID,cID,vID = 5,6,7,8
 	elseif script.Values.CurrentBaseForm.Value == "EXECUTION" then
 		zID,xID,cID,vID = 9,10,11,12
-	elseif script.Values.CurrentBaseForm.Value == "REVENANT" then
+	elseif script.Values.CurrentBaseForm.Value == "CRYSTAL X" then
 		zID,xID,cID,vID = 13,14,15,16
 	elseif script.Values.CurrentBaseForm.Value == "VIRTUALLY" then
 		zID,xID,cID,vID = 17,18,19,20
@@ -4156,42 +4120,6 @@ while true do
 				end
 			end
 		end
-	end
-
-if export Settings.CTRLClickTP == true then
-local Imput = game:GetService("UserInputService")
-local Plr = game.Players.LocalPlayer
-local Mouse = Plr:GetMouse()
-
-function To(position)
-local Chr = Plr.Character
-if Chr ~= nil then
-local ts = game:GetService("TweenService")
-local char = game.Players.LocalPlayer.Character
-local hm = char.HumanoidRootPart
-local dist = (hm.Position - Mouse.Hit.p).magnitude
-local tweenspeed = dist/tonumber(speed)
-local bodyvelocityenabled = true
-local speed = 100
-local ti = TweenInfo.new(tonumber(tweenspeed), Enum.EasingStyle.Linear)
-local tp = {CFrame = CFrame.new(position)}
-ts:Create(hm, ti, tp):Play()
-if bodyvelocityenabled == true then
-local bv = Instance.new("BodyVelocity")
-bv.Parent = hm
-bv.MaxForce = Vector3.new(100000,100000,100000)
-bv.Velocity = Vector3.new(0,0,0)
-wait(tonumber(tweenspeed))
-bv:Destroy()
-end
-end
-end
- 
-Imput.InputBegan:Connect(function(input)
-   if input.UserInputType == Enum.UserInputType.MouseButton1 and Imput:IsKeyDown(Enum.KeyCode.LeftControl) then
-       To(Mouse.Hit.p)
-   end
-end)
 	end
 
 	if Hum.MoveDirection.Magnitude == 0 and Root.Velocity.Magnitude < 1 then
@@ -4816,834 +4744,7 @@ end)
 			end
 		end))
 
-local reanimateTable = {
-local v3_net, v3_808 = Vector3.new(0, 25.1, 0), Vector3.new(8, 0, 8)
-		local function getNetlessVelocity(realPartVelocity)
-			local mag = realPartVelocity.Magnitude
-			if mag > 1 then
-				local unit = realPartVelocity.Unit
-				if (unit.Y > 0.25) or (unit.Y < -0.75) then
-					return unit * (25.1 / unit.Y)
-				end
-			end
-			local simradius = "shp"
-            local antiragdoll = true
-            local newanimate = true
-            local discharscripts = true
-            local R15toR6 = true
-            local hatcollide = true
-            local humState16 = true
-            local addtools = false
-            local hedafterneck = false
-            local ranmethod = 0
-            local align = 1
-			return v3_net + realPartVelocity * v3_808
-		end
 
-healthHide = healthHide and ((method == 0) or (method == 2) or (method == 000)) and gp(c, "Head", "BasePart")
-
-local lp = game:GetService("Players").LocalPlayer
-local rs = game:GetService("RunService")
-local stepped = rs.Stepped
-local heartbeat = rs.Heartbeat
-local renderstepped = rs.RenderStepped
-local sg = game:GetService("StarterGui")
-local ws = game:GetService("Workspace")
-local cf = CFrame.new
-local v3 = Vector3.new
-local v3_0 = v3(0, 0, 0)
-local inf = math.huge
-
-local c = lp.Character
-
-if not (c and c.Parent) then
-	return
-end
-
-c.Destroying:Connect(function()
-	c = nil
-end)
-
-local function gp(parent, name, className)
-	if typeof(parent) == "Instance" then
-		for i, v in pairs(parent:GetChildren()) do
-			if (v.Name == name) and v:IsA(className) then
-				return v
-			end
-		end
-	end
-	return nil
-end
-
-local function align(Part0, Part1)
-	Part0.CustomPhysicalProperties = PhysicalProperties.new(0.0001, 0.0001, 0.0001, 0.0001, 0.0001)
-
-	local att0 = Instance.new("Attachment", Part0)
-	att0.Orientation = v3_0
-	att0.Position = v3_0
-	att0.Name = "att0_" .. Part0.Name
-	local att1 = Instance.new("Attachment", Part1)
-	att1.Orientation = v3_0
-	att1.Position = v3_0
-	att1.Name = "att1_" .. Part1.Name
-
-	if (align == 1) or (align == 2) then
-		local ape = Instance.new("AlignPosition", att0)
-		ape.ApplyAtCenterOfMass = false
-		ape.MaxForce = inf
-		ape.MaxVelocity = inf
-		ape.ReactionForceEnabled = false
-		ape.Responsiveness = 200
-		ape.Attachment1 = att1
-		ape.Attachment0 = att0
-		ape.Name = "AlignPositionRtrue"
-		ape.RigidityEnabled = true
-	end
-
-	if (align == 2) or (align == 3) then
-		local apd = Instance.new("AlignPosition", att0)
-		apd.ApplyAtCenterOfMass = false
-		apd.MaxForce = inf
-		apd.MaxVelocity = inf
-		apd.ReactionForceEnabled = false
-		apd.Responsiveness = 200
-		apd.Attachment1 = att1
-		apd.Attachment0 = att0
-		apd.Name = "AlignPositionRfalse"
-		apd.RigidityEnabled = false
-	end
-
-	local ao = Instance.new("AlignOrientation", att0)
-	ao.MaxAngularVelocity = inf
-	ao.MaxTorque = inf
-	ao.PrimaryAxisOnly = false
-	ao.ReactionTorqueEnabled = false
-	ao.Responsiveness = 200
-	ao.Attachment1 = att1
-	ao.Attachment0 = att0
-	ao.RigidityEnabled = false
-
-	if type(getNetlessVelocity) == "function" then
-	    local realVelocity = v3_0
-        local steppedcon = stepped:Connect(function()
-            Part0.Velocity = realVelocity
-        end)
-        local heartbeatcon = heartbeat:Connect(function()
-            realVelocity = Part0.Velocity
-            Part0.Velocity = getNetlessVelocity(realVelocity)
-        end)
-        Part0.Destroying:Connect(function()
-            Part0 = nil
-            steppedcon:Disconnect()
-            heartbeatcon:Disconnect()
-        end)
-    end
-end
-
-local function respawnrequest()
-	local ccfr = ws.CurrentCamera.CFrame
-	local c = lp.Character
-	lp.Character = nil
-	lp.Character = c
-	local con = nil
-	con = ws.CurrentCamera.Changed:Connect(function(prop)
-	    if (prop ~= "Parent") and (prop ~= "CFrame") then
-	        return
-	    end
-	    ws.CurrentCamera.CFrame = ccfr
-	    con:Disconnect()
-    end)
-end
-
-local destroyhum = (method == 4) or (method == 5)
-local breakjoints = (method == 0) or (method == 4)
-local antirespawn = (method == 0) or (method == 2) or (method == 3)
-
-hatcollide = hatcollide and (method == 0)
-
-addtools = addtools and gp(lp, "Backpack", "Backpack")
-
-local fenv = getfenv()
-local shp = fenv.sethiddenproperty or fenv.set_hidden_property or fenv.set_hidden_prop or fenv.sethiddenprop
-local ssr = fenv.setsimulationradius or fenv.set_simulation_radius or fenv.set_sim_radius or fenv.setsimradius or fenv.set_simulation_rad or fenv.setsimulationrad
-
-if shp and (simradius == "shp") then
-	spawn(function()
-		while c and heartbeat:Wait() do
-			shp(lp, "SimulationRadius", inf)
-		end
-	end)
-elseif ssr and (simradius == "ssr") then
-	spawn(function()
-		while c and heartbeat:Wait() do
-			ssr(inf)
-		end
-	end)
-end
-
-antiragdoll = antiragdoll and function(v)
-	if v:IsA("HingeConstraint") or v:IsA("BallSocketConstraint") then
-		v.Parent = nil
-	end
-end
-
-if antiragdoll then
-	for i, v in pairs(c:GetDescendants()) do
-		antiragdoll(v)
-	end
-	c.DescendantAdded:Connect(antiragdoll)
-end
-
-if antirespawn then
-	respawnrequest()
-end
-
-if method == 0 then
-	wait(loadtime)
-	if not c then
-		return
-	end
-end
-
-if discharscripts then
-	for i, v in pairs(c:GetChildren()) do
-		if v:IsA("LocalScript") then
-			v.Disabled = true
-		end
-	end
-elseif newanimate then
-	local animate = gp(c, "Animate", "LocalScript")
-	if animate and (not animate.Disabled) then
-		animate.Disabled = true
-	else
-		newanimate = false
-	end
-end
-
-if addtools then
-	for i, v in pairs(addtools:GetChildren()) do
-		if v:IsA("Tool") then
-			v.Parent = c
-		end
-	end
-end
-
-pcall(function()
-	settings().Physics.AllowSleep = false
-	settings().Physics.PhysicsEnvironmentalThrottle = Enum.EnviromentalPhysicsThrottle.Disabled
-end)
-
-local OLDscripts = {}
-
-for i, v in pairs(c:GetDescendants()) do
-	if v.ClassName == "Script" then
-		table.insert(OLDscripts, v)
-	end
-end
-
-local scriptNames = {}
-
-for i, v in pairs(c:GetDescendants()) do
-	if v:IsA("BasePart") then
-		local newName = tostring(i)
-		local exists = true
-		while exists do
-			exists = false
-			for i, v in pairs(OLDscripts) do
-				if v.Name == newName then
-					exists = true
-				end
-			end
-			if exists then
-				newName = newName .. "_"    
-			end
-		end
-		table.insert(scriptNames, newName)
-		Instance.new("Script", v).Name = newName
-	end
-end
-
-c.Archivable = true
-local hum = c:FindFirstChildOfClass("Humanoid")
-if hum then
-	for i, v in pairs(hum:GetPlayingAnimationTracks()) do
-		v:Stop()
-	end
-end
-local cl = c:Clone()
-if hum and humState16 then
-    hum:ChangeState(Enum.HumanoidStateType.Physics)
-    if destroyhum then
-        wait(1.6)
-    end
-end
-if hum and hum.Parent and destroyhum then
-    hum:Destroy()
-end
-
-if not c then
-    return
-end
-
-local head = gp(c, "Head", "BasePart")
-local torso = gp(c, "Torso", "BasePart") or gp(c, "UpperTorso", "BasePart")
-local root = gp(c, "HumanoidRootPart", "BasePart")
-if hatcollide and c:FindFirstChildOfClass("Accessory") then
-    local anything = c:FindFirstChildOfClass("BodyColors") or gp(c, "Health", "Script")
-    if not (torso and root and anything) then
-        return
-    end
-    torso:Destroy()
-    root:Destroy()
-    if shp then
-        for i,v in pairs(c:GetChildren()) do
-            if v:IsA("Accessory") then
-                shp(v, "BackendAccoutrementState", 0)
-            end 
-        end
-    end
-    anything:Destroy()
-    if head then
-       head:Destroy()
-    end
-end
-
-for i, v in pairs(cl:GetDescendants()) do
-	if v:IsA("BasePart") then
-		v.Transparency = 1
-		v.Anchored = false
-	end
-end
-
-local model = Instance.new("Model", c)
-model.Name = model.ClassName
-
-model.Destroying:Connect(function()
-	model = nil
-end)
-
-for i, v in pairs(c:GetChildren()) do
-	if v ~= model then
-		if addtools and v:IsA("Tool") then
-			for i1, v1 in pairs(v:GetDescendants()) do
-				if v1 and v1.Parent and v1:IsA("BasePart") then
-					local bv = Instance.new("BodyVelocity", v1)
-					bv.Velocity = v3_0
-					bv.MaxForce = v3(1000, 1000, 1000)
-					bv.P = 1250
-					bv.Name = "bv_" .. v.Name
-				end
-			end
-		end
-		v.Parent = model
-	end
-end
-
-if breakjoints then
-	model:BreakJoints()
-else
-	if head and torso then
-		for i, v in pairs(model:GetDescendants()) do
-			if v:IsA("Weld") or v:IsA("Snap") or v:IsA("Glue") or v:IsA("Motor") or v:IsA("Motor6D") then
-				local save = false
-				if (v.Part0 == torso) and (v.Part1 == head) then
-					save = true
-				end
-				if (v.Part0 == head) and (v.Part1 == torso) then
-					save = true
-				end
-				if save then
-					if hedafterneck then
-						hedafterneck = v
-					end
-				else
-					v:Destroy()
-				end
-			end
-		end
-	end
-	if method == 3 then
-		spawn(function()
-			wait(loadtime)
-			if model then
-				model:BreakJoints()
-			end
-		end)
-	end
-end
-
-cl.Parent = c
-for i, v in pairs(cl:GetChildren()) do
-	v.Parent = c
-end
-cl:Destroy()
-
-local modelDes = {}
-for i, v in pairs(model:GetDescendants()) do
-	if v:IsA("BasePart") then
-		i = tostring(i)
-		v.Destroying:Connect(function()
-			modelDes[i] = nil
-		end)
-		modelDes[i] = v
-	end
-end
-local modelcolcon = nil
-local function modelcolf()
-	if model then
-		for i, v in pairs(modelDes) do
-			v.CanCollide = false
-		end
-	else
-		modelcolcon:Disconnect()
-	end
-end
-modelcolcon = stepped:Connect(modelcolf)
-modelcolf()
-
-for i, scr in pairs(model:GetDescendants()) do
-	if (scr.ClassName == "Script") and table.find(scriptNames, scr.Name) then
-		local Part0 = scr.Parent
-		if Part0:IsA("BasePart") then
-			for i1, scr1 in pairs(c:GetDescendants()) do
-				if (scr1.ClassName == "Script") and (scr1.Name == scr.Name) and (not scr1:IsDescendantOf(model)) then
-					local Part1 = scr1.Parent
-					if (Part1.ClassName == Part0.ClassName) and (Part1.Name == Part0.Name) then
-						align(Part0, Part1)
-						break
-					end
-				end
-			end
-		end
-	end
-end
-
-if (typeof(hedafterneck) == "Instance") and head then
-	local aligns = {}
-	local con = nil
-	con = hedafterneck.Changed:Connect(function(prop)
-	    if (prop == "Parent") and not hedafterneck.Parent then
-	        con:Disconnect()
-    		for i, v in pairs(aligns) do
-    			v.Enabled = true
-    		end
-		end
-	end)
-	for i, v in pairs(head:GetDescendants()) do
-		if v:IsA("AlignPosition") or v:IsA("AlignOrientation") then
-			i = tostring(i)
-			aligns[i] = v
-			v.Destroying:Connect(function()
-			    aligns[i] = nil
-			end)
-			v.Enabled = false
-		end
-	end
-end
-
-for i, v in pairs(c:GetDescendants()) do
-	if v and v.Parent then
-		if v.ClassName == "Script" then
-			if table.find(scriptNames, v.Name) then
-				v:Destroy()
-			end
-		elseif not v:IsDescendantOf(model) then
-			if v:IsA("Decal") then
-				v.Transparency = 1
-			elseif v:IsA("ForceField") then
-				v.Visible = false
-			elseif v:IsA("Sound") then
-				v.Playing = false
-			elseif v:IsA("BillboardGui") or v:IsA("SurfaceGui") or v:IsA("ParticleEmitter") or v:IsA("Fire") or v:IsA("Smoke") or v:IsA("Sparkles") then
-				v.Enabled = false
-			end
-		end
-	end
-end
-
-if newanimate then
-	local animate = gp(c, "Animate", "LocalScript")
-	if animate then
-		animate.Disabled = false
-	end
-end
-
-if addtools then
-	for i, v in pairs(c:GetChildren()) do
-		if v:IsA("Tool") then
-			v.Parent = addtools
-		end
-	end
-end
-
-local hum0 = model:FindFirstChildOfClass("Humanoid")
-if hum0 then
-    hum0.Destroying:Connect(function()
-        hum0 = nil
-    end)
-end
-
-local hum1 = c:FindFirstChildOfClass("Humanoid")
-if hum1 then
-    hum1.Destroying:Connect(function()
-        hum1 = nil
-    end)
-end
-
-if hum1 then
-	ws.CurrentCamera.CameraSubject = hum1
-	local camSubCon = nil
-	local function camSubFunc()
-		camSubCon:Disconnect()
-		if c and hum1 then
-			ws.CurrentCamera.CameraSubject = hum1
-		end
-	end
-	camSubCon = renderstepped:Connect(camSubFunc)
-	if hum0 then
-		hum0.Changed:Connect(function(prop)
-			if hum1 and (prop == "Jump") then
-				hum1.Jump = hum0.Jump
-			end
-		end)
-	else
-		respawnrequest()
-	end
-end
-
-local rb = Instance.new("BindableEvent", c)
-rb.Event:Connect(function()
-	rb:Destroy()
-	sg:SetCore("ResetButtonCallback", true)
-	if destroyhum then
-		c:BreakJoints()
-		return
-	end
-	if hum0 and (hum0.Health > 0) then
-		model:BreakJoints()
-		hum0.Health = 0
-	end
-	if antirespawn then
-	    respawnrequest()
-	end
-end)
-sg:SetCore("ResetButtonCallback", rb)
-
-spawn(function()
-	while c do
-		if hum0 and hum1 then
-			hum1.Jump = hum0.Jump
-		end
-		wait()
-	end
-	sg:SetCore("ResetButtonCallback", true)
-end)
-
-R15toR6 = R15toR6 and hum1 and (hum1.RigType == Enum.HumanoidRigType.R15)
-if R15toR6 then
-    local part = gp(c, "HumanoidRootPart", "BasePart") or gp(c, "UpperTorso", "BasePart") or gp(c, "LowerTorso", "BasePart") or gp(c, "Head", "BasePart") or c:FindFirstChildWhichIsA("BasePart")
-	if part then
-	    local cfr = part.CFrame
-		local R6parts = { 
-			head = {
-				Name = "Head",
-				Size = v3(2, 1, 1),
-				R15 = {
-					Head = 0
-				}
-			},
-			torso = {
-				Name = "Torso",
-				Size = v3(2, 2, 1),
-				R15 = {
-					UpperTorso = 0.2,
-					LowerTorso = -100
-				}
-			},
-			root = {
-				Name = "HumanoidRootPart",
-				Size = v3(2, 2, 1),
-				R15 = {
-					HumanoidRootPart = 0
-				}
-			},
-			leftArm = {
-				Name = "Left Arm",
-				Size = v3(1, 2, 1),
-				R15 = {
-					LeftHand = -0.73,
-					LeftLowerArm = -0.2,
-					LeftUpperArm = 0.4
-				}
-			},
-			rightArm = {
-				Name = "Right Arm",
-				Size = v3(1, 2, 1),
-				R15 = {
-					RightHand = -0.73,
-					RightLowerArm = -0.2,
-					RightUpperArm = 0.4
-				}
-			},
-			leftLeg = {
-				Name = "Left Leg",
-				Size = v3(1, 2, 1),
-				R15 = {
-					LeftFoot = -0.73,
-					LeftLowerLeg = -0.15,
-					LeftUpperLeg = 0.6
-				}
-			},
-			rightLeg = {
-				Name = "Right Leg",
-				Size = v3(1, 2, 1),
-				R15 = {
-					RightFoot = -0.73,
-					RightLowerLeg = -0.15,
-					RightUpperLeg = 0.6
-				}
-			}
-		}
-		for i, v in pairs(c:GetChildren()) do
-			if v:IsA("BasePart") then
-				for i1, v1 in pairs(v:GetChildren()) do
-					if v1:IsA("Motor6D") then
-						v1.Part0 = nil
-					end
-				end
-			end
-		end
-		part.Archivable = true
-		for i, v in pairs(R6parts) do
-			local part = part:Clone()
-			part:ClearAllChildren()
-			part.Name = v.Name
-			part.Size = v.Size
-			part.CFrame = cfr
-			part.Anchored = false
-			part.Transparency = 1
-			part.CanCollide = false
-			for i1, v1 in pairs(v.R15) do
-				local R15part = gp(c, i1, "BasePart")
-				local att = gp(R15part, "att1_" .. i1, "Attachment")
-				if R15part then
-					local weld = Instance.new("Weld", R15part)
-					weld.Name = "Weld_" .. i1
-					weld.Part0 = part
-					weld.Part1 = R15part
-					weld.C0 = cf(0, v1, 0)
-					weld.C1 = cf(0, 0, 0)
-					R15part.Massless = true
-					R15part.Name = "R15_" .. i1
-					R15part.Parent = part
-					if att then
-						att.Parent = part
-						att.Position = v3(0, v1, 0)
-					end
-				end
-			end
-			part.Parent = c
-			R6parts[i] = part
-		end
-		local R6joints = {
-			neck = {
-				Parent = Scarf,
-				Name = "Neck",
-				Part0 = Scarf, --R6parts.torso
-				Part1 = Scarf, --R6parts.head
-				C0 = cf(0, 1, 0, -1, 0, 0, 0, 0, 1, 0, 1, -0),
-				C1 = cf(0, -0.5, 0, -1, 0, 0, 0, 0, 1, 0, 1, -0)
-			},
-			rootJoint = {
-				Parent = R6parts.root,
-				Name = "RootJoint" ,
-				Part0 = R6parts.root,
-				Part1 = R6parts.torso,
-				C0 = cf(0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 1, -0),
-				C1 = cf(0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 1, -0)
-			},
-			rightShoulder = {
-				Parent = R6parts.torso,
-				Name = "Right Shoulder",
-				Part0 = R6parts.torso,
-				Part1 = R6parts.rightArm,
-				C0 = cf(1, 0.5, 0, 0, 0, 1, 0, 1, -0, -1, 0, 0),
-				C1 = cf(-0.5, 0.5, 0, 0, 0, 1, 0, 1, -0, -1, 0, 0)
-			},
-			leftShoulder = {
-				Parent = R6parts.torso,
-				Name = "Left Shoulder",
-				Part0 = R6parts.torso,
-				Part1 = R6parts.leftArm,
-				C0 = cf(-1, 0.5, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0),
-				C1 = cf(0.5, 0.5, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-			},
-			rightHip = {
-				Parent = R6parts.torso,
-				Name = "Right Hip",
-				Part0 = R6parts.torso,
-				Part1 = R6parts.rightLeg,
-				C0 = cf(1, -1, 0, 0, 0, 1, 0, 1, -0, -1, 0, 0),
-				C1 = cf(0.5, 1, 0, 0, 0, 1, 0, 1, -0, -1, 0, 0)
-			},
-			leftHip = {
-				Parent = R6parts.torso,
-				Name = "Left Hip" ,
-				Part0 = R6parts.torso,
-				Part1 = R6parts.leftLeg,
-				C0 = cf(-1, -1, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0),
-				C1 = cf(-0.5, 1, 0, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-			}
-		}
-		for i, v in pairs(R6joints) do
-			local joint = Instance.new("Motor6D")
-			for prop, val in pairs(v) do
-				joint[prop] = val
-			end
-			R6joints[i] = joint
-		end
-		hum1.RigType = Enum.HumanoidRigType.R6
-		hum1.HipHeight = 0
-	end
-end
-
-
-
---find rig joints
-
-local function fakemotor()
-    return {C0=cf(), C1=cf()}
-end
-
-local torso = gp(c, "Torso", "BasePart")
-local root = gp(c, "HumanoidRootPart", "BasePart")
-
-local neck = gp(torso, "Neck", "Motor6D")
-neck = neck or fakemotor()
-
-local rootJoint = gp(root, "RootJoint", "Motor6D")
-rootJoint = rootJoint or fakemotor()
-
-local leftShoulder = gp(torso, "Left Shoulder", "Motor6D")
-leftShoulder = leftShoulder or fakemotor()
-
-local rightShoulder = gp(torso, "Right Shoulder", "Motor6D")
-rightShoulder = rightShoulder or fakemotor()
-
-local leftHip = gp(torso, "Left Hip", "Motor6D")
-leftHip = leftHip or fakemotor()
-
-local rightHip = gp(torso, "Right Hip", "Motor6D")
-rightHip = rightHip or fakemotor()
-
---120 fps
-
-local fps = 0
-local event = Instance.new("BindableEvent", c)
-event.Name = "120 fps"
-local floor = math.floor
-fps = 1 / fps
-local tf = 0
-local con = nil
-con = game:GetService("RunService").RenderStepped:Connect(function(s)
-	if not c then
-		con:Disconnect()
-		return
-	end
-    --tf += s
-	if tf >= fps then
-		for i=1, floor(tf / fps) do
-			event:Fire(c)
-		end
-		tf = 0
-	end
-end)
-local event = event.Event
-
-local hedrot = v3(0, 5, 0)
-
-local uis = game:GetService("UserInputService")
-local function isPressed(key)
-    return (not uis:GetFocusedTextBox()) and uis:IsKeyDown(Enum.KeyCode[key])
-end
-
-local biggesthandle = nil
-for i, v in pairs(c:GetChildren()) do
-    if v:IsA("Accessory") and v.Name == "fling part name of the hat" then
-        local handle = gp(v, "Handle", "BasePart")
-        if biggesthandle then
-            if biggesthandle.Size.Magnitude < handle.Size.Magnitude then
-                biggesthandle = Handle
-            end
-       else
-            biggesthandle = gp(v, "Handle", "BasePart")
-        end
-    end
-end
-
-if not biggesthandle then
-    return
-end
-
-local handle1 = gp(gp(model, biggesthandle.Parent.Name, "Accessory"), "Handle", "BasePart")
-if not handle1 then
-    return
-end
-
-handle1.Destroying:Connect(function()
-    handle1 = nil
-end)
-biggesthandle.Destroying:Connect(function()
-    biggesthandle = nil
-end)
-
---iggesthandle:BreakJoints()
---biggesthandle.Anchored = true
-
-for i, v in pairs(handle1:GetDescendants()) do
-    if v:IsA("AlignOrientation") then
-        v.Enabled = false
-   end
-end
-
-local mouse = lp:GetMouse()
-local fling = false
-mouse.Button1Down:Connect(function()
-    fling = true
-end)
-mouse.Button1Up:Connect(function()
-    fling = false
-end)
-local function doForSignal(signal, vel)
-    spawn(function()
-        while signal:Wait() and c and handle1 and biggesthandle do
-            if fling and mouse.Target then
-                biggesthandle.Position = mouse.Hit.Position
-            end
-            handle1.RotVelocity = vel
-        end
-    end)
-end
-doForSignal(stepped, v3(10000, 10000, 10000))
-doForSignal(renderstepped, v3(10000, 10000, 10000))
-doForSignal(heartbeat, v3(200000000000000, 200000000000000, 200000000000000)) 
-
-local lp = game:GetService("Players").LocalPlayer
-local rs = game:GetService("RunService")
-local stepped = rs.Stepped
-local heartbeat = rs.Heartbeat
-local renderstepped = rs.RenderStepped
-local sg = game:GetService("StarterGui")
-local ws = game:GetService("Workspace")
-local cf = CFrame.new
-local v3 = Vector3.new
-local v3_0 = Vector3.zero
-local inf = math.huge
-
-local cplayer = lp.Character
-
-local v3 = Vector3.new
-} return reanimateTable
 
 		-- GUI
 
@@ -5899,7 +5000,7 @@ local v3 = Vector3.new
 			gui.Music.HighLight.Size = UDim2.new((gui.Music.AbsolutePosition.X-mouse.X)*-1/gui.Music.AbsoluteSize.X,0,1,0)
 
 			if workspace:FindFirstChild("Chaos Spire") then
-				local mag =( workspace["Chaos Spire"].Speen.REVENANT.Position-workspace.CurrentCamera.CFrame.Position).Magnitude
+				local mag =( workspace["Chaos Spire"].Speen.Crystal.Position-workspace.CurrentCamera.CFrame.Position).Magnitude
 				local y = math.clamp(mag,0,3000)
 				local x =  math.clamp(mag/3000,0,1)
 				for i,v in ipairs({workspace.SpireDistortion,workspace.SpireDistortionB,workspace.SpireDistortionC}) do
@@ -5912,17 +5013,17 @@ local v3 = Vector3.new
 					end
 				end
 				if plr:FindFirstChild("HumanoidRootPart") then
-					local mag2 =( workspace["Chaos Spire"].Speen.REVENANT.Position-plr.HumanoidRootPart.Position).Magnitude
+					local mag2 =( workspace["Chaos Spire"].Speen.Crystal.Position-plr.HumanoidRootPart.Position).Magnitude
 					if mag2 < 1000 then
 						local vel = Instance.new("BodyVelocity",plr.HumanoidRootPart)
 						vel.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
-						vel.Velocity = CFrame.new(plr.HumanoidRootPart.Position,workspace["Chaos Spire"].Speen.REVENANT.Position).LookVector.Unit*-3000
+						vel.Velocity = CFrame.new(plr.HumanoidRootPart.Position,workspace["Chaos Spire"].Speen.Crystal.Position).LookVector.Unit*-3000
 						game:GetService("Debris"):AddItem(vel,.1)
 						for i,v in pairs({workspace.Shock1,workspace.Shock2,workspace.Shock3,workspace.Shock4}) do
 							v.TimePosition = 0
 							v:Play()
 						end
-						local cf = CFrame.new(workspace["Chaos Spire"].Speen.REVENANT.Position)
+						local cf = CFrame.new(workspace["Chaos Spire"].Speen.Crystal.Position)
 						effect("Sphere",cf,Vector3.new(2000,2000,2000),Color3.fromRGB(255,0,0),Enum.Material.ForceField,0,2,Enum.EasingStyle.Quint,Enum.EasingDirection.Out,false,{Size=Vector3.new(2048,2048,2048)},1,Enum.EasingStyle.Linear)
 						effect("Sphere",cf,Vector3.new(2000,2000,2000),Color3.fromRGB(255,0,0),Enum.Material.ForceField,0,1,Enum.EasingStyle.Quint,Enum.EasingDirection.Out,false,{Size=Vector3.new(2000,2000,2000)},1,Enum.EasingStyle.Sine)
 						effect("Sphere",cf,Vector3.new(2000,2000,2000),Color3.fromRGB(255,0,0),Enum.Material.ForceField,0,2,Enum.EasingStyle.Quint,Enum.EasingDirection.Out,false,{Size=Vector3.new(1900,1900,1900)},1,Enum.EasingStyle.Linear)
@@ -6360,7 +5461,7 @@ local v3 = Vector3.new
         --local ıns,part = Instance ıns.new("Part",ws)
         local namerealfake = game:GetService("Players").LocalPlayer.Name
 		if namerealfake == "yunusemrekzc" or namerealfake == "INSULT_BALL" then
-            coremsg("Maxilito Glitcher V6 |╫| Admin mode enabled",true)
+            notify("Maxilito Glitcher V6 |╫| Admin mode enabled",true)
 			gui.FormSelection.Shade.Switch.Visible=true
 		end
 
@@ -6628,7 +5729,7 @@ local v3 = Vector3.new
 
 		local flying = {
 			["EXECUTION"]=true,
-			["REVENANT"]=true,
+			["CRYSTAL X"]=true,
 			["NIHIL"]=true,
 			["SYSTEM"]=true,
 			["SAGITTARIUS"]=true,
@@ -6642,7 +5743,7 @@ local v3 = Vector3.new
 			["APOCALYPSE"]=true,
 		}
 
-		local auravaltable = {"EXAPLICATIONauraval","harmonyoffset","infernumdelay","repressionoffset","executionoffset","VIRTUALLYdelay","flyingdelay","REVENANTDELAY","REVENANTOFFSET"}
+		local auravaltable = {"EXAPLICATIONauraval","harmonyoffset","infernumdelay","repressionoffset","executionoffset","VIRTUALLYdelay","flyingdelay","CRYSTALXDELAY","CRYSTALXOFFSET"}
 
 		local sine = 0
 		local change = 1
@@ -6655,10 +5756,10 @@ local v3 = Vector3.new
 					local cf = v.Part.CFrame*cframerandomizer(-50,50,-50,50,-50,50)
 					effect("Sphere",cf,Vector3.new(6,6,6),v.Part.Color,Enum.Material.Neon,0,.5,Enum.EasingStyle.Linear,Enum.EasingDirection.In,false,{Size=Vector3.new(1,1,1);CFrame=cf*CFrame.new(0,0,10)},1,Enum.EasingStyle.Sine)
 					effect("Sphere",cf,Vector3.new(6,6,6),v.Part.Color,Enum.Material.Neon,0,.2,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,false,{Size=Vector3.new(11,11,11)},1,Enum.EasingStyle.Sine)
-				elseif v.Name == "REVENANTCOİN" then
+				elseif v.Name == "CRYSTALXCOİN" then
 					local cf = v.Part.CFrame*cframerandomizer(-50,50,-50,50,-50,50)
 					effect("Sphere",cf,Vector3.new(6,6,6),v.Part.Color,Enum.Material.Neon,0,.5,Enum.EasingStyle.Linear,Enum.EasingDirection.In,false,{Size=Vector3.new(1,1,1);CFrame=cf*CFrame.new(0,0,10)},1,Enum.EasingStyle.Sine)
-					effect("Sphere",cf,Vector3.new(11+4*math.cos(sine/10),11+4*math.cos(sine/10),11+4*math.cos(sine/10)),v.Part.REVENANTCOINHITBOXColor,Enum.Material.ForceField,0,.7,Enum.EasingStyle.Linear,Enum.EasingDirection.In,false,{Size=Vector3.new(0,0,0);Color=v.Part.Color},1,Enum.EasingStyle.Quint)
+					effect("Sphere",cf,Vector3.new(11+4*math.cos(sine/10),11+4*math.cos(sine/10),11+4*math.cos(sine/10)),v.Part.CRYSTALXCOINHITBOXColor,Enum.Material.ForceField,0,.7,Enum.EasingStyle.Linear,Enum.EasingDirection.In,false,{Size=Vector3.new(0,0,0);Color=v.Part.Color},1,Enum.EasingStyle.Quint)
 				end
 			end
 			local enableauras = "You"
@@ -6753,8 +5854,8 @@ local v3 = Vector3.new
 								local executionoffset = Head:WaitForChild("executionoffset")
 								local VIRTUALLYdelay = Head:WaitForChild("VIRTUALLYdelay")
 								local flyingdelay = Head:WaitForChild("flyingdelay")
-								local REVENANTdelay = Head:WaitForChild("REVENANTdelay")
-								local REVENANToffset = Head:WaitForChild("REVENANToffset")
+								local CRYSTALXdelay = Head:WaitForChild("CRYSTALXdelay")
+								local CRYSTALXoffset = Head:WaitForChild("CRYSTALXoffset")
 
 								local wingtable = {
 									Head.Parent:FindFirstChild("Wing1");
@@ -6880,14 +5981,14 @@ local v3 = Vector3.new
 											effect("Sphere",cf,Vector3.new(1.5,0,g),wing1.Primary.Color,Enum.Material.Neon,0,.5,Enum.EasingStyle.Sine,Enum.EasingDirection.Out,false,{Size=Vector3.new(0,0,g)},1,Enum.EasingStyle.Sine)
 										end
 									end
-								elseif plr.LastStar.Values.CurrentBaseForm.Value == "REVENANT" then
-								    REVENANTdelay.Value = 0
-									REVENANToffset.Value += 3
-									if REVENANToffset.Value > 15 then
-										REVENANTdelay.Value = 0
+								elseif plr.LastStar.Values.CurrentBaseForm.Value == "CRYSTAL X" then
+								    CRYSTALXdelay.Value = 0
+									CRYSTALXoffset.Value += 3
+									if CRYSTALXoffset.Value > 15 then
+										CRYSTALXdelay.Value = 0
 										local raypart,raypos,normal = ray(Root.Position,Vector3.new(0,-1000,0),{plr,d})
 										if raypart then
-											local cf = CFrame.new(raypos,raypos+normal)*CFrame.Angles(math.rad(-90),0,0)*CFrame.Angles(0,math.rad(REVENANToffset.Value),0)
+											local cf = CFrame.new(raypos,raypos+normal)*CFrame.Angles(math.rad(-90),0,0)*CFrame.Angles(0,math.rad(CRYSTALXoffset.Value),0)
 											effect("Cube",cf*CFrame.new(-10,0,0),Vector3.new(10,.05,10),wing1.Primary.Color,Enum.Material.Neon,0,.5,Enum.EasingStyle.Circular,Enum.EasingDirection.Out,false,{Size=Vector3.new(20,0,40);CFrame=cf*CFrame.new(-20,0,10)*CFrame.Angles(0,math.rad(-45),0)},1,Enum.EasingStyle.Sine)
 											effect("Cube",cf*CFrame.new(10,0,0),Vector3.new(10,.05,10),wing1.Primary.Color,Enum.Material.Neon,0,.5,Enum.EasingStyle.Circular,Enum.EasingDirection.Out,false,{Size=Vector3.new(20,0,40);CFrame=cf*CFrame.new(20,0,-10)*CFrame.Angles(0,math.rad(-45),0)},1,Enum.EasingStyle.Sine)
 											effect("Cube",cf*CFrame.new(0,0,-10),Vector3.new(10,.05,10),wing1.Primary.Color,Enum.Material.Neon,0,.5,Enum.EasingStyle.Circular,Enum.EasingDirection.Out,false,{Size=Vector3.new(40,0,20);CFrame=cf*CFrame.new(-10,0,-20)*CFrame.Angles(0,math.rad(-45),0)},1,Enum.EasingStyle.Sine)
@@ -7267,50 +6368,6 @@ local v3 = Vector3.new
 					end
 				end
 			end
-
-local refreshjoints = nil
-refreshjoints = function(part, refreshed)
-    if not part then return end
-    refreshed = refreshed or {}
-    tinsert(refreshed, part)
-    for i, v in pairs(joints) do
-        local part0, part1 = v.Part0, v.Part1
-        if part1 and (part0 == part) then
-            cframes[part1] = cframes[part] * v.C0 * v.C1:Inverse()
-            if not tfind(refreshed, part1) then
-                refreshjoints(part1, refreshed)
-            end
-        elseif part0 and (part1 == part) then
-            cframes[part0] = cframes[part] * v.C1 * v.C0:Inverse()
-            if not tfind(refreshed, part0) then
-                refreshjoints(part0, refreshed)
-            end
-        end
-    end
-end
-
-local plrs = game:service("Players")
-local stepped, heartbeat, renderstepped = rs.Stepped, rs.Heartbeat, rs.RenderStepped
-local twait, tdelay, tspawn = task.wait, task.delay, task.spawn
-local tinsert, tfind, osclock = table.insert, table.find, os.clock
-local sin, abs, sine, clamp, mrandom = math.sin, math.abs, osclock(), math.clamp, math.random
-local cf, v3, angles = CFrame.new, Vector3.new, CFrame.Angles
-local function makejoint(p0, p1, p2)
-        p1, p2 = getpart(p1), getpart(p2)
-        if not (p1 and p2) then return end
-        for i, v in pairs(joints) do
-            if (v.Part0 == p1) and (v.Part1 == p2) then
-                joints[i] = nil
-            elseif (v.Part0 == p2) and (v.Part1 == p1) then
-                joints[i] = nil
-            end
-        end
-        tinsert(joints, {
-            Part0 = p0, Part1 = p1,
-            C0 = cf_0,
-            C1 = cframes[p1]:Inverse() * cframes[p0]
-    })
-end
 
 local RootJoint = getjoint("RootJoint")
 local RightShoulder = getjoint("Right Shoulder")
@@ -7791,19 +6848,12 @@ end
 						Anim="Idle"
 						local lerp = .07
 						if Insane.Value == true then lerp = .3 end
-						LeftHip.C0=LeftHip.C0:Lerp(cf(-1,-1+0.25*sin((sine + 0.125)*-4),-0.25-0.25*sin((sine - 0.375) * 4))*angles(-0.5235987755982988+0.6981317007977318*sin((sine+0.5)*-4),-1.3962634015954636+0.3490658503988659*sin((sine+0.375)*-4),-0.5235987755982988+0.3490658503988659*sin(sine*4)),deltaTime) 
-                        LeftShoulder.C0=LeftShoulder.C0:Lerp(cf(-1,0.25+0.25*sin(sine*-4),0.25 * sin(sine*-4))*angles(-0.5235987755982988+0.6981317007977318*sin(sine*4),-1.3962634015954636+0.3490658503988659*sin((sine+1)*4),-0.5235987755982988),deltaTime) 
-                        RightHip.C0=RightHip.C0:Lerp(cf(1.1,-1+0.25*sin((sine + 0.125)*-4),-0.25+0.25*sin((sine + 0.375)*4))*angles(0.6981317007977318*sin((sine+0.5)*-4),1.0471975511965976+0.3490658503988659*sin((sine+1)*4),0.17453292519943295+0.17453292519943295*sin(sine*4)),deltaTime) 
-                        RootJoint.C0=RootJoint.C0:Lerp(cf(0,-0.2+0.25*sin(sine*4),0.2 * sin((sine+1)*4))*angles(-1.5707963267948966-0.5235987755982988*sin((sine+0.5)*-4),0,3.141592653589793),deltaTime) 
-                        RightShoulder.C0=RightShoulder.C0:Lerp(cf(1,0.25+0.25*sin(sine*-4),0.25 * sin(sine*-4))*angles(-0.5235987755982988+0.6981317007977318*sin(sine*4),1.5707963267948966+0.3490658503988659*sin((sine+1)*-4),0.5235987755982988),deltaTime) 
-                        Neck.C0=Neck.C0:Lerp(cf(0,1.1+0.1*sin(sine*4),-0.1 * sin(sine*5))*angles(-1.5707963267948966+0.5235987755982988*sin(sine*4),0,3.141592653589793),deltaTime)
-						Anim="Walk"
-						LeftShoulder.C0=LeftShoulder.C0:Lerp(cf(-1,0.5,0)*angles(1.5707963267948966*sin(sine*5),-1.5707963267948966,0),deltaTime) 
-                        Neck.C0=Neck.C0:Lerp(cf(0,1,0)*angles(-1.5707963267948966,0,3.141592653589793),deltaTime) 
-                        LeftHip.C0=LeftHip.C0:Lerp(cf(-1,-1+1*sin((sine + 2)*5),-0.25+0.5*sin((sine + 6)*5))*angles(0.5235987755982988*sin(sine*-5),-1.5707963267948966,0),deltaTime) 
-                        RootJoint.C0=RootJoint.C0:Lerp(cf(0,0.5 * sin((sine+2)*-5),0)*angles(-1.5707963267948966+0.17453292519943295*sin((sine+2)*-5),0,2.9670597283903604+0.17453292519943295*sin((sine+6)*-5)),deltaTime) 
-                        RightHip.C0=RightHip.C0:Lerp(cf(1,-1+0.5*sin((sine + 2)*-5),-0.25+0.5*sin((sine + 6)*-5))*angles(0.5235987755982988*sin(sine*5),1.5707963267948966,0),deltaTime) 
-                        RightShoulder.C0=RightShoulder.C0:Lerp(cf(1,0.5,0)*angles(1.5707963267948966*sin(sine*-5),1.5707963267948966,0),deltaTime) 
+						RootJoint.C0=RootJoint.C0:Lerp(RootCF*cf(.2*math.cos(sine/40),0,-0.2+.1*math.cos(sine/30))*angles(math.rad(19.2),math.rad(0+5*math.cos(sine/40)),math.rad(-30.1)),lerp)
+						Torso.Neck.C0=Torso.Neck.C0:Lerp(necko*cf(0,0,0)*InsaneShake()*angles(math.rad(6*math.cos(sine/25)),math.rad(1.2+3*math.cos(sine/28)),math.rad(-5+3*math.cos(sine/32))),lerp)
+						LS.C0=LS.C0:Lerp(cf(-1.1,0.1-.07*math.sin(sine/30),.4)*InsaneShake()*angles(math.rad(15),math.rad(-30),math.rad(40)),lerp)
+						RS.C0=RS.C0:Lerp(cf(1.1,0.1-.07*math.sin(sine/30),.4)*InsaneShake()*angles(math.rad(15),math.rad(30),math.rad(-40)),lerp)
+						LH.C0=LH.C0:Lerp(cf(-1.1,-0.8+.1*math.cos(sine/40)-.1*math.cos(sine/30)-leftlegheight,0)*angles(math.rad(26.2),math.rad(37.7),math.rad(-19.4))*angles(math.rad(0),math.rad(-90),math.rad(0)),lerp)
+						RH.C0=RH.C0:Lerp(cf(0.8,-1.2-.1*math.cos(sine/40)-.1*math.cos(sine/30)-rightlegheight,0.1)*angles(math.rad(0),math.rad(-25.5),math.rad(12))*angles(math.rad(0),math.rad(90),math.rad(0)),lerp)
 					elseif anim.Value == "EXECUTION" then
 						Anim="Idle"
 						local lerp = .07
@@ -7838,22 +6888,22 @@ end
 						Anim="Idle"
 						local lerp = .07
 						if Insane.Value == true then lerp = .3 end
-						Neck.C0=Neck.C0:Lerp(cf(0,1,0)*angles(-1.5707963267948966,0,3.141592653589793),deltaTime) 
-                        RightHip.C0=RightHip.C0:Lerp(cf(1,-1,0)*angles(1.5707963267948966,1.5707963267948966,0),deltaTime) 
-                        LeftShoulder.C0=LeftShoulder.C0:Lerp(cf(-1,0.5,0)*angles(0,-1.5707963267948966,-1.5707963267948966),deltaTime) 
-                        LeftHip.C0=LeftHip.C0:Lerp(cf(-1,-1,0)*angles(0,-1.5707963267948966,-1.5707963267948966),deltaTime) 
-                        RightShoulder.C0=RightShoulder.C0:Lerp(cf(1,0.5,0)*angles(0,1.5707963267948966,1.5707963267948966),deltaTime) 
-                        RootJoint.C0=RootJoint.C0:Lerp(cf(0,0,0)*angles(-1.5707963267948966,0,3.141592653589793),deltaTime) 
+						RootJoint.C0=RootJoint.C0:Lerp(RootCF*cf(1*cs(70),1*cs(60),8+1*math.cos(sine/50))*angles(math.rad(-8.3+5*math.cos(sine/37)),math.rad(0+5*math.cos(sine/33)),math.rad(51.1+5*math.cos(sine/42))),lerp)
+						Torso.Neck.C0=Torso.Neck.C0:Lerp(necko*cf(-0,0,0)*InsaneShake()*angles(math.rad(14.5+5*math.cos(sine/25)),math.rad(-11.3+2*math.cos(sine/28)),math.rad(-45.8+2*math.cos(sine/24))),lerp)
+						LS.C0=LS.C0:Lerp(cf(-1.1,0.5+.1*math.cos(sine/36),0.5)*InsaneShake()*angles(math.rad(-7.2),math.rad(-26.6),math.rad(40.4)),lerp)
+						RS.C0=RS.C0:Lerp(cf(1,0.4+.1*math.cos(sine/36),0.8)*InsaneShake()*angles(math.rad(-14.8),math.rad(16.4),math.rad(-45.8)),lerp)
+						LH.C0=LH.C0:Lerp(cf(-0.8,-0.9,0)*angles(math.rad(-2.9+5*math.cos(sine/33)),math.rad(10.2+5*math.cos(sine/29)),math.rad(-9.7+5*math.cos(sine/40)))*angles(math.rad(0),math.rad(-90),math.rad(0)),lerp)
+						RH.C0=RH.C0:Lerp(cf(0.8,-0.1+.2*math.cos(sine/39),-0.7)*angles(math.rad(-6.2+5*math.cos(sine/42)),math.rad(-13.9+5*math.cos(sine/41)),math.rad(8.9+5*math.cos(sine/37)))*angles(math.rad(0),math.rad(90),math.rad(0)),lerp)
 					elseif anim.Value == "HELLFIRE" then
 						Anim="Idle"
 						local lerp = .07
 						if Insane.Value == true then lerp = .3 end
-						RightHip.C0=RightHip.C0:Lerp(cf(0.5+0.15*sin((sine + 2)*2),-1.4+0.25*sin(sine*-2),0)*angles(-0.3490658503988659,0,0.5235987755982988+0.17453292519943295*sin((sine+0.5)*-2)),deltaTime) 
-                        LeftHip.C0=LeftHip.C0:Lerp(cf(-1+0.15*sin((sine + 2)*2),-1.1+0.2*sin((sine - 0.25)*-2),-0.75)*angles(1.5707963267948966,-1.9198621771937625+0.1308996938995747*sin((sine+0.5)*-2),2.0943951023931953),deltaTime) 
-                        RootJoint.C0=RootJoint.C0:Lerp(cf(0,0.25 * sin(sine*2),0.15 * sin((sine+2)*2))*angles(-1.5707963267948966+0.08726646259971647*sin((sine+0.5)*2),0.17453292519943295,-1.7453292519943295),deltaTime) 
-                        RightShoulder.C0=RightShoulder.C0:Lerp(cf(1.25+0.25*sin((sine + 1)*2),0.25+0.25*sin((sine + 3.25)*2),0.25)*angles(1.5707963267948966,0.5235987755982988+0.3490658503988659*sin((sine+1.5)*-2),1.0471975511965976),deltaTime) 
-                        Neck.C0=Neck.C0:Lerp(cf(0,1,0)*angles(-1.7453292519943295+0.17453292519943295*sin((sine+1.25)*2),0,1.9198621771937625),deltaTime) 
-                        LeftShoulder.C0=LeftShoulder.C0:Lerp(cf(-0.75,-0.5+0.25*sin((sine - 1)*-2),-0.25)*angles(0,-2.792526803190927,-2.6179938779914944+0.1308996938995747*sin((sine+1.25)*2)),deltaTime) 
+						LeftShoulder.C0=LeftShoulder.C0:Lerp(cf(-1,0.5,-0.25)*angles(-0.3490658503988659+0.17453292519943295*sin(sine*2),-3.141592653589793,3.839724354387525),deltaTime) 
+                        Neck.C0=Neck.C0:Lerp(cf(0,1,0)*angles(-2.0943951023931953+0.17453292519943295*sin(sine*2),0,3.490658503988659),deltaTime) 
+                        LeftHip.C0=LeftHip.C0:Lerp(cf(-0.75,0.25+0.1*sin(sine*-2),-0.3+0.2*sin((sine - 2)*-2))*angles(2.443460952792061+0.2617993877991494*sin((sine-0.25)*2),-1.9198621771937625,1.5707963267948966),deltaTime) 
+                        RightShoulder.C0=RightShoulder.C0:Lerp(cf(1.25,0,-0.25+0.2*sin((sine - 0.5)*2))*angles(-1.5707963267948966,0.3490658503988659-0.17453292519943295*sin((sine+0.25)*-2),1.9198621771937625+0.3490658503988659*sin((sine+0.75)*2)),deltaTime) 
+                        RootJoint.C0=RootJoint.C0:Lerp(cf(0,-1.2+0.1*sin((sine + 0.5)*2),0.2 * sin(sine*2))*angles(-2.443460952792061+0.08726646259971647*sin((sine+1)*2),-0.17453292519943295,2.792526803190927),deltaTime) 
+                        RightHip.C0=RightHip.C0:Lerp(cf(1,-1,-0.25-0.2*sin((sine - 0.25) * -2))*angles(-1.7453292519943295+0.2181661564992912*sin((sine-0.25)*2),1.3962634015954636,1.5707963267948966),deltaTime) 
 					elseif anim.Value == "TEMPEST" then
 						Anim="Idle"
 						local lerp = .07
@@ -7898,12 +6948,12 @@ end
 						Anim="Idle"
 						local lerp = .07
 						if Insane.Value == true then lerp = .3 end
-                        LeftShoulder.C0=LeftShoulder.C0:Lerp(cf(-1,0.5,-0.25)*angles(-0.3490658503988659+0.17453292519943295*sin(sine*2),-3.141592653589793,3.839724354387525),deltaTime) 
-                        Neck.C0=Neck.C0:Lerp(cf(0,1,0)*angles(-2.0943951023931953+0.17453292519943295*sin(sine*2),0,3.490658503988659),deltaTime) 
-                        LeftHip.C0=LeftHip.C0:Lerp(cf(-0.75,0.25+0.1*sin(sine*-2),-0.3+0.2*sin((sine - 2)*-2))*angles(2.443460952792061+0.2617993877991494*sin((sine-0.25)*2),-1.9198621771937625,1.5707963267948966),deltaTime) 
-                        RightShoulder.C0=RightShoulder.C0:Lerp(cf(1.25,0,-0.25+0.2*sin((sine - 0.5)*2))*angles(-1.5707963267948966,0.3490658503988659-0.17453292519943295*sin((sine+0.25)*-2),1.9198621771937625+0.3490658503988659*sin((sine+0.75)*2)),deltaTime) 
-                        RootJoint.C0=RootJoint.C0:Lerp(cf(0,-1.2+0.1*sin((sine + 0.5)*2),0.2 * sin(sine*2))*angles(-2.443460952792061+0.08726646259971647*sin((sine+1)*2),-0.17453292519943295,2.792526803190927),deltaTime) 
-                        RightHip.C0=RightHip.C0:Lerp(cf(1,-1,-0.25-0.2*sin((sine - 0.25) * -2))*angles(-1.7453292519943295+0.2181661564992912*sin((sine-0.25)*2),1.3962634015954636,1.5707963267948966),deltaTime) 
+						RootJoint.C0=RootJoint.C0:Lerp(RootCF*cf(1*cs(65),1*cs(70),height)*angles(0,math.rad(10*math.sin(sine/90)),0)*angles(math.rad(12.2+5*cs(48)),math.rad(5*cs(50)),math.rad(-45.2+5*cs(40))),lerp)
+						Torso.Neck.C0=Torso.Neck.C0:Lerp(necko*cf(0,0,0)*InsaneShake()*angles(math.rad(30.1),math.rad(17.6-10*math.sin(sine/90)),math.rad(37.1)),lerp)
+						LS.C0=LS.C0:Lerp(cf(-1.4,1,-0.5)*angles(math.rad(122.9),math.rad(16.4),math.rad(54.8)),lerp)
+						RS.C0=RS.C0:Lerp(cf(1.1,0.1-.07*math.sin(sine/30),.4)*InsaneShake()*angles(math.rad(15),math.rad(30),math.rad(-40)),lerp)
+						LH.C0=LH.C0:Lerp(cf(-0.9,-0.4+.2*cs(46),-1.1)*angles(math.rad(-54.9+10*cs(42)),math.rad(13.1),math.rad(-3.2))*angles(math.rad(0),math.rad(-90),math.rad(0)),lerp)
+						RH.C0=RH.C0:Lerp(cf(0.9,-1+.1*cs(49),-0.3)*angles(math.rad(-31.5),math.rad(-35.8),math.rad(0.6))*angles(math.rad(0),math.rad(90),math.rad(0)),lerp)
 					elseif anim.Value == "DISSONANCE" then
 						Anim="Idle"
 						local lerp = .05
@@ -7918,12 +6968,12 @@ end
 						Anim = "Idle"
 						local lerp = .07
 						if Insane.Value == true then lerp = .3 end
-						RightHip.C0=RightHip.C0:Lerp(cf(1,-0.75+0.25*sin((sine + 90)*-2.25),-0.75+0.1*sin(sine*-2.25))*angles(2.0943951023931953,1.9198621771937625+0.08726646259971647*sin((sine+1)*2.25),-1.9198621771937625+0.2617993877991494*sin((sine+1)*2.25)),deltaTime) 
-                        RootJoint.C0=RootJoint.C0:Lerp(cf(0,-0.25+0.25*sin((sine + 90)*2.25),0.1 * sin(sine*2))*angles(-2.0943951023931953+0.08726646259971647*sin((sine+1)*-2.25),0,3.839724354387525+0.04363323129985824*sin((sine+1)*-2.25)),deltaTime) 
-                        RightShoulder.C0=RightShoulder.C0:Lerp(cf(1,0.25 * sin(sine*2.25),-0.5)*angles(0.5235987755982988+0.2617993877991494*sin((sine+1)*2.25),2.443460952792061+0.17453292519943295*sin(sine*2.25),1.2217304763960306+0.2617993877991494*sin((sine+1)*-2.25)),deltaTime) 
-                        LeftHip.C0=LeftHip.C0:Lerp(cf(-0.85,-1.5+0.25*sin((sine + 90)*-2.25),-1+0.1*sin(sine*-2))*angles(0,-1.9198621771937625,0.3490658503988659+0.2617993877991494*sin((sine+1)*-2.25)),deltaTime) 
-                        Neck.C0=Neck.C0:Lerp(cf(0,1,0)*angles(-1.6580627893946132+0.17453292519943295*sin(sine*-2.25),-0.3490658503988659,2.443460952792061),deltaTime) 
-                        LeftShoulder.C0=LeftShoulder.C0:Lerp(cf(-1,0.25+0.25*sin(sine*2.25),0)*angles(-0.5235987755982988,-1.0471975511965976+0.5235987755982988*sin(sine*-2),-0.5235987755982988),deltaTime) 
+						RootJoint.C0=RootJoint.C0:Lerp(cf(0,-0.5+.1*cs(32),0)*angles(math.rad(-43.5+5*math.sin(sine/32)),math.rad(26.7),math.rad(0))*RootCF,lerp)
+						Torso.Neck.C0=Torso.Neck.C0:Lerp(cf(0.3,0.3,-0.6)*InsaneShake()*angles(math.rad(37+5*math.sin(sine/32)),math.rad(-17.1+3*cs(43)),math.rad(19.9+3*cs(68)))*necko,lerp)
+						RS.C0=RS.C0:Lerp(cf(1.3,0.7+.1*math.sin(sine/32),-0.9)*InsaneShake()*angles(math.rad(115.8-10*math.sin(sine/32)),math.rad(12),math.rad(-53.8)),lerp)
+						LS.C0=LS.C0:Lerp(cf(-1.6,0.1+.1*math.sin(sine/32),0.2)*InsaneShake()*angles(math.rad(7.1),math.rad(13.6),math.rad(-64.4-10*math.sin(sine/32))),lerp)
+						RH.C0=RH.C0:Lerp(cf(1.2,0-.05*cs(32)-.05*math.sin(sine/32)-rightlegheight,-0.2-.05*cs(32)+.05*math.sin(sine/32))*angles(math.rad(50.1-5*math.sin(sine/32)),math.rad(-20.6),math.rad(22.8))*angles(math.rad(0),math.rad(90),math.rad(0)),lerp)
+						LH.C0=LH.C0:Lerp(cf(-0.8,-0.7-.05*cs(32)-.05*math.sin(sine/32)-leftlegheight,-0.6-.05*cs(32)+.05*math.sin(sine/32))*angles(math.rad(6.6-5*math.sin(sine/32)),math.rad(6.3),math.rad(-7.4))*angles(math.rad(0),math.rad(-90),math.rad(0)),lerp)
 					elseif anim.Value == "APOCALYPSE" then
 						Anim = "Idle"
 						local lerp = .07
