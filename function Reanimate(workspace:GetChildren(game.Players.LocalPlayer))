@@ -1,0 +1,433 @@
+for _,v in pairs(game.Players.LocalPlayer.Character) do
+	v["Hat1"].Handle.Mesh:Destroy()
+	v["Pal Hair"].Handle.Mesh:Destroy()
+	v["Pink Hair"].Handle.Mesh:Destroy()
+	v["Kate Hair"].Handle.Mesh:Destroy()
+	v["LavanderHair"].Handle.Mesh:Destroy()
+	v["Robloxclassicred"].Handle.Mesh:Destroy()
+end
+
+local e = Enum
+local cf = CFrame.new
+
+if not (LocalPlayer.Character and LocalPlayer.Character.Parent) then
+	return
+end
+
+LocalPlayer.Character.Destroying:Connect(function()
+	LocalPlayer.Character = nil
+end)
+
+function RotateOrPosition(parent, name, className)
+	if typeof(parent) == "Instance" then
+		for i, v in pairs(parent:GetChildren()) do
+			if (v.Name == name) and v:IsA(className) then
+				return v
+			end
+		end
+	end
+	return nil
+end
+
+function AlignPart(Part0, Part1)
+	Part0.CustomPhysicalProperties = PhysicalProperties.new(0.0001, 0.0001, 0.0001, 0.0001, 0.0001)
+end
+
+local ATT0 = Instance.new("Attachment", Part0)
+ATT0.Orientation = Vector3.new(0, 0, 0)
+ATT0.Position = Vector3.new(0, 0, 0)
+ATT0.Name = "ATT0_" .. Part0.Name
+local ATT1 = Instance.new("Attachment", Part1)
+ATT1.Orientation = Vector3.new(0, 0, 0)
+ATT1.Position = Vector3.new(0, 0, 0)
+ATT1.Name = "ATT1_" .. Part1.Name
+
+function respawnrequest()
+	local ccfr = workspace.CurrentCamera.CFrame
+	local c = lp.Character
+	lp.Character = nil
+	lp.Character = c
+	local con = nil
+	con = workspace.CurrentCamera.Changed:Connect(function(prop)
+	    if (prop ~= "Parent") and (prop ~= "CFrame") then
+	        return
+	    end
+	    workspace.CurrentCamera.CFrame = ccfr
+	    con:Disconnect()
+    end)
+end
+
+local LocalPlayer = game:GetService("Players").LocalPlayer
+local c = LocalPlayer.Character
+
+local fenv = getfenv()
+local shp = fenv.sethiddenproperty or fenv.set_hidden_property or fenv.set_hidden_prop or fenv.sethiddenprop
+local ssr = fenv.setsimulationradius or fenv.set_simulation_radius or fenv.set_sim_radius or fenv.setsimradius or fenv.set_simulation_rad or fenv.setsimulationrad
+
+spawn(function()
+		while LocalPlayer.Character and heartbeat:Wait() do
+		shp(lp, "SimulationRadius", math.huge)
+	end
+end)
+
+ANTIRAGDOLL = ANTIRAGDOLL and function(v)
+	if v:IsA("HingeConstraint") or v:IsA("BallSocketConstraint") then
+		v.Parent = nil
+	end
+end
+
+if ANTIRAGDOLL then
+	local ANTIRAGDOLL = true
+	for i, v in pairs(c:GetDescendants()) do
+		ANTIRAGDOLL(v)
+	end
+	c.DescendantAdded:Connect(ANTIRAGDOLL)
+end
+
+for i, v in pairs(c:GetChildren()) do
+		if v:IsA("LocalScript") then
+			v.Disabled = true
+		end
+	end
+local animate = RotateOrPosition(c, "Animate", "LocalScript")
+if animate and (not animate.Disabled) then
+	animate.Disabled = true
+	else
+	animate.Disabled = false
+end
+end
+
+pcall(function()
+	settings().Physics.Alloworkspaceleep = false
+	settings().Physics.PhysicsEnvironmentalThrottle = e.EnviromentalPhysicsThrottle.Disabled
+end)
+
+local OLDscripts = {}
+
+for i, v in pairs(c:GetDescendants()) do
+	if v.ClassName == "Script" then
+		table.insert(OLDscripts, v)
+	end
+end
+
+local scriptNames = {}
+
+for i, v in pairs(c:GetDescendants()) do
+	if v:IsA("BasePart") then
+		local newName = tostring(i)
+		local exists = true
+		while exists do
+			exists = false
+			for i, v in pairs(OLDscripts) do
+				if v.Name == newName then
+					exists = true
+				end
+			end
+			if exists then
+				newName = newName .. "_"    
+			end
+		end
+		table.insert(scriptNames, newName)
+		Instance.new("Script", v).Name = newName
+	end
+end
+
+c.Archivable = true
+local hum = c:FindFirstChildOfClass("Humanoid")
+if hum then
+	for i, v in pairs(hum:GetPlayingAnimationTracks()) do
+		v:Stop()
+	end
+end
+local cl = c:Clone()
+if hum and hum.Parent and destroyhum then
+    hum:Destroy()
+end
+
+if not c then
+    return
+end
+
+local head = RotateOrPosition(c, "Head", "BasePart")
+local torso = RotateOrPosition(c, "Torso", "BasePart") or RotateOrPosition(c, "UpperTorso", "BasePart")
+local root = RotateOrPosition(c, "HumanoidRootPart", "BasePart")
+local hatcollide = true
+if hatcollide and c:FindFirstChildOfClass("Accessory") then
+    local anything = c:FindFirstChildOfClass("BodyColors") or RotateOrPosition(c, "Health", "Script")
+    if not (torso and root and anything) then
+        return
+    end
+    torso:Destroy()
+    root:Destroy()
+    if shp then
+        for i,v in pairs(c:GetChildren()) do
+            if v:IsA("Accessory") then
+                shp(v, "BackendAccoutrementState", 0)
+            end 
+        end
+    end
+    anything:Destroy()
+    if head then
+       head:Destroy()
+    end
+end
+
+for i, v in pairs(cl:GetDescendants()) do
+	if v:IsA("BasePart") then
+		v.Transparency = 1
+		v.Anchored = false
+	end
+end
+
+local model = Instance.new("Model", c)
+model.Name = model.ClassName
+
+model.Destroying:Connect(function()
+	model = nil
+end)
+
+for i, v in pairs(c:GetChildren()) do
+	if v ~= model then
+		v.Parent = model
+	end
+end
+
+if breakjoints then
+	model:BreakJoints()
+else
+	if head and torso then
+		for i, v in pairs(model:GetDescendants()) do
+			if v:IsA("Weld") or v:IsA("Snap") or v:IsA("Glue") or v:IsA("Motor") or v:IsA("Motor6D") then
+				local save = false
+				if (v.Part0 == torso) and (v.Part1 == head) then
+					save = true
+				end
+				if (v.Part0 == head) and (v.Part1 == torso) then
+					save = true
+				end
+				if save then
+					v:Destroy()
+				end
+			end
+		end
+	end
+
+cl.Parent = c
+for i, v in pairs(cl:GetChildren()) do
+	v.Parent = c
+end
+cl:Destroy()
+
+local modelDes = {}
+for i, v in pairs(model:GetDescendants()) do
+	if v:IsA("BasePart") then
+		i = tostring(i)
+		v.Destroying:Connect(function()
+			modelDes[i] = nil
+		end)
+		modelDes[i] = v
+	end
+end
+local modelcolcon = nil
+function modelcolf()
+	if model then
+		for i, v in pairs(modelDes) do
+			v.CanCollide = false
+		end
+	else
+		modelcolcon:Disconnect()
+	end
+end
+modelcolcon = stepped:Connect(modelcolf)
+modelcolf()
+
+for i, scr in pairs(model:GetDescendants()) do
+	if (scr.ClassName == "Script") and table.find(scriptNames, scr.Name) then
+		local Part0 = scr.Parent
+		if Part0:IsA("BasePart") then
+			for i1, scr1 in pairs(c:GetDescendants()) do
+				if (scr1.ClassName == "Script") and (scr1.Name == scr.Name) and (not scr1:IsDescendantOf(model)) then
+					local Part1 = scr1.Parent
+					if (Part1.ClassName == Part0.ClassName) and (Part1.Name == Part0.Name) then
+						AlignPart(Part0, Part1)
+						break
+					end
+				end
+			end
+		end
+	end
+end
+
+for i, v in pairs(head:GetDescendants()) do
+		if v:IsA("AlignPartPosition") or v:IsA("AlignPartOrientation") then
+			i = tostring(i)
+			Parts[i] = v
+			v.Destroying:Connect(function()
+			    Parts[i] = nil
+			end)
+			v.Enabled = false
+		end
+	end
+end
+
+for i, v in pairs(c:GetDescendants()) do
+	if v and v.Parent then
+		if v.ClassName == "Script" then
+			if table.find(scriptNames, v.Name) then
+				v:Destroy()
+			end
+		elseif not v:IsDescendantOf(model) then
+			if v:IsA("Decal") then
+				v.Transparency = 1
+			elseif v:IsA("ForceField") then
+				v.Visible = false
+			elseif v:IsA("Sound") then
+				v.Playing = false
+			elseif v:IsA("BillboardGui") or v:IsA("SurfaceGui") or v:IsA("ParticleEmitter") or v:IsA("Fire") or v:IsA("Smoke") or v:IsA("Sparkles") then
+				v.Enabled = false
+			end
+		end
+	end
+end
+
+local animate = RotateOrPosition(c, "Animate", "LocalScript")
+if animate then
+	animate.Disabled = false
+end
+
+local hum0 = model:FindFirstChildOfClass("Humanoid")
+if hum0 then
+    hum0.Destroying:Connect(function()
+        hum0 = nil
+    end)
+end
+
+local hum1 = c:FindFirstChildOfClass("Humanoid")
+if hum1 then
+    hum1.Destroying:Connect(function()
+        hum1 = nil
+    end)
+end
+
+if hum1 then
+	workspace.CurrentCamera.CameraSubject = hum1
+	local camSubCon = nil
+	function camSubFunc()
+		camSubCon:Disconnect()
+		if c and hum1 then
+			workspace.CurrentCamera.CameraSubject = hum1
+		end
+	end
+	camSubCon = renderstepped:Connect(camSubFunc)
+	if hum0 then
+		hum0.Changed:Connect(function(prop)
+			if hum1 and (prop == "Jump") then
+				hum1.Jump = hum0.Jump
+			end
+		end)
+	else
+		respawnrequest()
+	end
+end
+
+local rb = Instance.new("BindableEvent", c)
+rb.Event:Connect(function()
+	rb:Destroy()
+	sg:SetCore("ResetButtonCallback", true)
+	if destroyhum then
+		c:BreakJoints()
+		return
+	end
+	if hum0 and (hum0.Health > 0) then
+		model:BreakJoints()
+		hum0.Health = 0
+	end
+	if antirespawn then
+	    respawnrequest()
+	end
+end)
+sg:SetCore("ResetButtonCallback", rb)
+
+spawn(function()
+	while c do
+		if hum0 and hum1 then
+			hum1.Jump = hum0.Jump
+		end
+		wait()
+	end
+	sg:SetCore("ResetButtonCallback", true)
+end)
+
+function fakemotor()
+    return {C0=CFrame.new(), C1=CFrame.new()}
+end
+
+local torso = RotateOrPosition(c, "Torso", "BasePart")
+local root = RotateOrPosition(c, "HumanoidRootPart", "BasePart")
+
+local neck = RotateOrPosition(torso, "Neck", "Motor6D")
+neck = neck or fakemotor()
+
+local rootJoint = RotateOrPosition(root, "RootJoint", "Motor6D")
+rootJoint = rootJoint or fakemotor()
+
+local leftShoulder = RotateOrPosition(torso, "Left Shoulder", "Motor6D")
+leftShoulder = leftShoulder or fakemotor()
+
+local rightShoulder = RotateOrPosition(torso, "Right Shoulder", "Motor6D")
+rightShoulder = rightShoulder or fakemotor()
+
+local leftHip = RotateOrPosition(torso, "Left Hip", "Motor6D")
+leftHip = leftHip or fakemotor()
+
+local rightHip = RotateOrPosition(torso, "Right Hip", "Motor6D")
+rightHip = rightHip or fakemotor()
+
+local hedrot = Vector3.new(0, 5, 0)
+
+local uis = game:GetService("UserInputService")
+function isPressed(key)
+    return (not uis:GetFocusedTextBox()) and uis:IsKeyDown(e.KeyCode[key])
+end
+
+local hat2 = RotateOrPosition(c, "Hat1", "Accessory")
+local handle2 = RotateOrPosition(hat2, "Handle", "BasePart")
+local att2 = RotateOrPosition(handle2, "ATT1_Handle", "Attachment")
+att2.Parent = c["Torso"]
+att2.Position = Vector3.new(0.5, -0, 0)
+att2.Rotation = Vector3.new(90, 0, 0)
+
+local hat2 = RotateOrPosition(c, "Pal Hair", "Accessory")
+local handle2 = RotateOrPosition(hat2, "Handle", "BasePart")
+local att2 = RotateOrPosition(handle2, "ATT1_Handle", "Attachment")
+att2.Parent = c["Torso"]
+att2.Position = Vector3.new(-0.5, -0, 0)
+att2.Rotation = Vector3.new(90, 0, 0)
+
+local hat2 = RotateOrPosition(c, "Pink Hair", "Accessory")
+local handle2 = RotateOrPosition(hat2, "Handle", "BasePart")
+local att2 = RotateOrPosition(handle2, "ATT1_Handle", "Attachment")
+att2.Parent = c["Left Arm"]
+att2.Position = Vector3.new(0, -0, 0)
+att2.Rotation = Vector3.new(90, 0, 0)
+
+local hat2 = RotateOrPosition(c, "Kate Hair", "Accessory")
+local handle2 = RotateOrPosition(hat2, "Handle", "BasePart")
+local att2 = RotateOrPosition(handle2, "ATT1_Handle", "Attachment")
+att2.Parent = c["Right Arm"]
+att2.Position = Vector3.new(-0, -0, 0)
+att2.Rotation = Vector3.new(90, 0, 0)
+
+local hat2 = RotateOrPosition(c, "LavanderHair", "Accessory")
+local handle2 = RotateOrPosition(hat2, "Handle", "BasePart")
+local att2 = RotateOrPosition(handle2, "ATT1_Handle", "Attachment")
+att2.Parent = c["Right Leg"]
+att2.Position = Vector3.new(0, 0, 0)
+att2.Rotation = Vector3.new(90, 0, 0)
+
+local hat2 = RotateOrPosition(c, "Robloxclassicred", "Accessory")
+local handle2 = RotateOrPosition(hat2, "Handle", "BasePart")
+local att2 = RotateOrPosition(handle2, "ATT1_Handle", "Attachment")
+att2.Parent = c["Left Leg"]
+att2.Position = Vector3.new(-0, 0, 0) 
+att2.Rotation = Vector3.new(90, 0, 0)
